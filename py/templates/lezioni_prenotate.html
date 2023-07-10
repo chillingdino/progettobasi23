@@ -1,0 +1,26 @@
+{% extends "base.html"%}
+    {%block menu%}
+       
+       
+        
+    {%endblock%}
+    {%block title%}
+        <h1> {{nome}}</h1>
+    {%endblock%}
+    {%block content%}
+    <head>  
+        <link rel="stylesheet" href="{{url_for('static', filename='calendarjs.css')}}" />
+        <script src="{{url_for('static', filename='calendarjs.js')}}"></script>
+    </head>
+
+    <body>
+        
+        <div class="contents">
+            <center>
+                <div id="myCalendar" style="max-width: 800px;"/>
+            </center>
+        </div>
+       
+    </body>
+    
+{%endblock%}

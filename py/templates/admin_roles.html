@@ -1,0 +1,82 @@
+{% extends "base.html"%}
+    {%block menu%}
+        
+    {%endblock%}
+    {%block title%}
+        <h1> {{value}}</h1>
+    {%endblock%}
+    {%block content%}
+        <body>
+            
+            
+            <div class="content">
+                <center>
+                    <table class="table table-striped">
+                    <tr>
+                        <th> codfiscale </th>
+                        <th> nome </th>
+                        <th> cognome </th>
+                        <th> ruolo </th>
+                    </tr> 
+                    <tbody id="myTable"> 
+                    </tbody>
+                </table>        
+                 <form method="POST" action="">
+                <div class = "form">
+                    <h2>Cambia ruolo</h2>
+                    <br>
+
+                    
+                    codicefiscale <input type = "text" name = "codfisc" /> <br>
+                    
+                    <input type="radio" id="utente" name="changerole" value="utente">
+                    <label for="utente">utente</label><br>
+                    <input type="radio" id="professore" name="changerole" value="professore">
+                    <label for="professore">professore</label><br>
+                    <input type="radio" id="admin" name="changerole" value="admin">
+                    <label for="admin">admin</label><br>
+                    <input type = "submit">
+                </div>
+                    
+                </center>
+    			
+            </div>
+           
+        </body>
+<script type="text/javascript">
+//per vedere tutti gli users da fare tabella
+
+    var users = decodeHtml('{{all_users}}');
+    var jusers = JSON.parse(users);
+
+    //fine variabili
+    //chiamate
+    table_users(jusers);
+    //funzioni  
+    function table_users(jusers){
+        var table = document.getElementById('myTable');
+
+        for (var i = 0; i < jusers.length; i++){
+        var row = `<tr>
+                        <td>${jusers[i].codfiscale}</td>
+                        <td>${jusers[i].nome}</td>
+                        <td>${jusers[i].cognome}</td>
+                        <td>${jusers[i].ruolo}</td>
+                  </tr>`
+        table.innerHTML += row
+
+
+        }
+       
+    }
+    function decodeHtml(html) {
+            var txt = document.createElement("textarea");
+            txt.innerHTML = html;
+            return txt.value;
+    }
+
+</script>
+{%endblock%}
+
+
+

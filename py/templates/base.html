@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+  <html>
+  <link rel="stylesheet" href="{{url_for('static', filename='basestyles.css')}}"/>
+  <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      crossorigin="anonymous"
+    />
+    <script
+    src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    type="text/javascript"
+    src="{{ url_for('static', filename='index.js') }}"
+  ></script>
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <body>
+      <div class="header">
+        <h1 class="header h1">Dais Unive</h1>
+      </div>
+      <div class="topnav">
+        <a href="/">Home</a>
+        {%block menu%} {%endblock%}
+        <a href="javascript:history.back()">Indietro</a>
+        <a href="/login/logout" class="logout"> LOGOUT </a> 
+      </div>
+      <div class="content">
+            <!--INIZIO CODICE PER MOSTRARE I MESSAGGI-->
+             
+            <div class="container">
+                {% for category, message in get_flashed_messages(with_categories=true) %}
+                <div class="{{ category }}">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{ message }}
+                </div>
+                {% endfor %}
+            
+                {% block page_content %}{% endblock %}
+            </div>
+             
+        <!--FINE CODICE PER MOSTRARE I MESSAGGI-->
+        {% block title %} {%endblock%}
+        
+        {% block content %} {% endblock %}
+      </div>
+      <div class="footer">
+        <a href="https://www.unive.it/">Homepage Unive</a>
+        <a href="https://moodle.unive.it/">Moodle Unive</a>
+      </div>
+  </body>
+</html>
+<script type="text/javascript">
+    
+/*----------------------------settings admin form -----------------------------------------*/
+
+    function openForm(name) {
+    document.getElementById(name).style.display = "block";
+    }
+
+    function closeForm(name) {
+    document.getElementById(name).style.display = "none";
+    } 
+/*---------------------------------calendario------------------------------------------*/
+       
+        var calendarInstance = new calendarJs( "myCalendar", { 
+            exportEventsEnabled: true, 
+            manualEditingEnabled: false, 
+            showTimesInMainCalendarEvents: false,
+            minimumDayHeight: 0,
+            organizerName: "Dais Unive Calendario",
+            organizerEmailAddress: "Dais@Unive.it"
+        } );
+
+    
+        // calendarInstance.addEvents(event);
+        // carica gli eventi dal caledario
+        function loadEvent(jattivita){
+            var allEvents = [];
+            for (var i = 0; i < jattivita.length; i++){
+
+                var event = 
+                        {
+                            from: exDate(jattivita[i].datainizio),
+                            to:exDate(jattivita[i].datafine) ,
+                            title: jattivita[i].nome,
+                            description: jattivita[i].descrizione,
+                            location: juser.id,
+                            isAllDayEvent: true,
+                            color: "#FF0000",
+                            colorText: "#FFFF00",
+                            colorBorder: "#00FF00"
+                        };
+                        // more events here
+                allEvents.push(event);
+            }
+            calendarInstance.addEvents(allEvents);
+        }
+        //variabili
+        var prenotazioni = decodeHtml('{{prenotazioni}}');
+        jprenotazioni = JSON.parse(prenotazioni);
+        loadPrenotazioni(jprenotazioni);
+
+        function loadPrenotazioni(jprenotazioni){
+            var allEvents = [];
+            for (var i = 0; i < jprenotazioni.length; i++){
+                var event = 
+                        {
+                            from: exDate(jprenotazioni[i].datainizio),
+                            to:exDate(jprenotazioni[i].durata) ,
+                            title: jprenotazioni[i].corso,
+                            description: "aula" + jprenotazioni[i].aula,
+                            location: jprenotazioni[i].aula,
+                            isAllDayEvent: true,
+                            color: "#FFD800 ",
+                            colorText: "#000000",
+                            colorBorder: "#293133"
+                        };
+                        // more events here
+                
+
+                allEvents.push(event);
+            }
+            calendarInstance.addEvents(allEvents);
+        }
+        
+
+        function exDate(date){
+            var dateParts = date.split(/[- :]/);
+            dateParts[1]--;
+            const dateObject = new Date(...dateParts);
+            return dateObject;
+
+        }
+        
+        
+        function decodeHtml(html) {
+            var txt = document.createElement("textarea");
+            txt.innerHTML = html;
+            return txt.value;
+        }
+        
+        function turnOnEventNotifications() {
+            calendarInstance.setOptions( {
+                eventNotificationsEnabled: true
+            } );
+        }
+
+        function setEvents() {
+            calendarInstance.setEvents( getEvents() );
+        }
+
+        function removeEvent() {
+            calendarInstance.removeEvent( new Date(), "Test Title 2" );
+        }
+
+        function daysInMonth( year, month ) {
+            return new Date( year, month + 1, 0 ).getDate();
+        }
+
+        function setOptions() {
+            calendarInstance.setOptions( {
+                minimumDayHeight: 70,
+                manualEditingEnabled: false,
+                exportEventsEnabled: false,
+                showDayNumberOrdinals: false,
+                fullScreenModeEnabled: false,
+                maximumEventsPerDayDisplay: 0,
+                showTimelineArrowOnFullDayView: false,
+                maximumEventTitleLength: 10,
+                maximumEventDescriptionLength: 10,
+                maximumEventLocationLength: 10,
+                maximumEventGroupLength: 10,
+                showDayNamesInMainDisplay: false,
+                tooltipsEnabled: false
+            } );
+        }
+
+        function onlyDotsDisplay() {
+            calendarInstance.setOptions( {
+                useOnlyDotEventsForMainDisplay: true
+            } );
+        }
+
+        function setCurrentDisplayDate() {
+            var newDate = new Date();
+            newDate.setMonth( newDate.getMonth() + 3 );
+
+            calendarInstance.setCurrentDisplayDate( newDate );
+        }
+
+        function getEvents() {
+            
+            var previousDay = new Date(),
+                today9 = new Date(),
+                today11 = new Date(),
+                tomorrow = new Date(),
+                firstDayInNextMonth = new Date(),
+                lastDayInNextMonth = new Date(),
+                today = new Date(),
+                today3HoursAhead = new Date();
+
+            previousDay.setDate( previousDay.getDate() - 1 );
+            today11.setHours( 11 );
+            tomorrow.setDate( today11.getDate() + 1 );
+            today9.setHours( 9 );
+
+            
+
+            firstDayInNextMonth.setDate( 1 );
+            firstDayInNextMonth.setDate( firstDayInNextMonth.getDate() + daysInMonth( firstDayInNextMonth.getFullYear(), firstDayInNextMonth.getMonth() ) );
+
+            lastDayInNextMonth.setDate( 1 );
+            lastDayInNextMonth.setMonth( lastDayInNextMonth.getMonth() + 1 );
+            lastDayInNextMonth.setDate( lastDayInNextMonth.getDate() + daysInMonth( lastDayInNextMonth.getFullYear(), lastDayInNextMonth.getMonth() ) - 1 );
+
+            today.setHours( 21, 59, 0, 0 );
+            today.setDate( today.getDate() + 3 );
+            today3HoursAhead.setHours( 23, 59, 0, 0 );
+            today3HoursAhead.setDate( today3HoursAhead.getDate() + 3 );
+
+            return [
+                {
+                    from: previousDay,
+                    to: previousDay,
+                    title: "Previous Day",
+                    description: "This is a another description of the event that has been added, so it can be shown in the pop-up dialog.",
+                    location: "Teams Meeting",
+                    isAllDay: true,
+                    color: "#FF0000",
+                    colorText: "#FFFF00",
+                    colorBorder: "#00FF00",
+                    repeatEvery: 4,
+                    id: "1234-5678-9",
+                    group: "Group 1"
+                },
+                
+            ];
+        }
+
+</script>
+
+
+
+
+
+
+

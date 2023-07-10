@@ -1,0 +1,92 @@
+{% extends "base.html"%}
+    {%block menu%}
+        
+    {%endblock%}
+    {%block title%}
+        <h1> {{value}}</h1>
+    {%endblock%}
+    {%block content%}
+    
+    <body>
+    	<div class="tabaule">
+            <table class="table table-striped">
+                <tr>
+                    <th> codcorso </th>
+                    <th> nome </th>
+                    <th> professore </th>
+                    <th> datainizio </th>
+                    <th> datafine </th>
+                </tr> 
+                <tbody  class id="CorsiTab"> 
+                </tbody>
+            </table>
+            <button class="open-button" onclick="openForm('corsiform')">Aggiungi corso</button>
+            <div class="form-popup" id="corsiform">
+               
+                <form method="POST" class="form-container" name="cform">
+                    <label for="codcorso"><b>codcorso</b></label><br>
+                    <input type="text" placeholder="Inserire codice" name="codcorso" required>
+                    <br>
+
+                    <label for="nome"><b>nome</b></label><br>
+                    <input type="text" placeholder="Inserire nome" name="nome" required>
+                    <br>
+
+                    <label for="professore"><b>professore</b></label><br>
+                    <input type="text" placeholder="inserire codicefiscale" name="professore" >
+                    <br>
+
+                    <label for="datainizio"><b>datainizio</b></label><br>
+                    <input type="date"  name="datainizio" required>
+                    <br>
+
+                    <label for="datafine"><b>datafine</b></label><br>
+                    <input type="date"  name="datafine" required>
+
+                    <br>
+                    <label for="descrizione"><b>descrizione</b></label><br>
+                    <input type="text" placeholder="Inserire descrizione" name="descrizione" required>
+                    
+
+                    <button type="submit"  class="btn">Aggiungi</button>
+                    <button type="button" class="btn cancel" onclick="closeForm('corsiform')">Close</button>
+                </form>
+            </div>
+        </div>  
+
+    </body>
+<script type="text/javascript">
+
+ 	var corsi = decodeHtml('{{corsi}}');
+    var jcorsi = JSON.parse(corsi);
+
+    tab_corsi(jcorsi)
+    //funzioni  
+    function tab_corsi(data){
+        var table = document.getElementById('CorsiTab');
+
+        for (var i = 0; i < data.length; i++){
+        var row = `<tr>
+                        <td>${data[i].codcorso}</td>
+                        <td>${data[i].nome}</td>
+                        <td>${data[i].professore}</td>
+                        <td>${data[i].datainizio}</td>
+                        <td>${data[i].datafine}</td>
+                        
+                  </tr>`
+        
+        table.innerHTML += row
+
+
+        }  
+    }
+    function decodeHtml(html) {
+            var txt = document.createElement("textarea");
+            txt.innerHTML = html;
+            return txt.value;
+    }
+
+
+</script>
+{%endblock%}
+

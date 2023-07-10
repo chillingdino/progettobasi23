@@ -1,0 +1,36 @@
+{% extends "base.html"%}
+    <a href="javascript:history.back()">Indietro</a>
+{%block menu%}
+{%endblock%}
+{%block title%}
+{%endblock%}
+
+{% block content %}
+    
+    <form method="POST" action="">
+        <div>
+            <center>
+            <H1>Inserire i propri dati </H1> <br>
+
+            Email <input type = "text" name = "email" placeholder="inserire email" required /> <br>
+            Password <input type = "text" name = "password" placeholder="8char 1 num 1UpperC 1LowerC " required /> <br>
+            Conferma password <input type = "text" name = "cpassword" placeholder="reinserire la password" required /> <br>       
+            Codice fiscale <input type = "text" name = "codfiscale" placeholder="codicefiscale" required/> <br>
+            Nome <input type = "text" name= "fname" required /> <br>
+            Cognome <input type = "text" name = "lname" required/> <br>
+            Età<input type = "number" name = "age" required /> <br>
+            Sesso:<br>
+            <input type="radio" id="male" name="sex" value="0"required>
+            <label for="male">Male</label><br>
+            <input type="radio" id="female" name="sex" value="1">
+            <label for="female">Female</label><br>
+
+            Numero di telefono <input type = "number" name = "phone" /> <br>
+            <input type = "submit">
+            </center>
+        </div> 
+    </form>
+    
+{% endblock %}
+
+  

@@ -1,0 +1,124 @@
+{% extends "base.html"%}
+    {%block menu%}
+       
+       
+        
+    {%endblock%}
+    {%block title%}
+        <h1> {{nome}}</h1>
+    {%endblock%}
+    {%block content%}
+    <head>  
+        <link rel="stylesheet" href="{{url_for('static', filename='calendarjs.css')}}" />
+        <script src="{{url_for('static', filename='calendarjs.js')}}"></script>
+    </head>
+
+    <body>
+        <div class="contents">
+            <center>
+                <h1> Tutti i corsi</h1>
+                <table class="table table-striped">
+                    <tr>
+                      <th> codcorso </th>
+                      <th> nome </th>
+                      <th> professore </th>
+                      <th> datainizio </th>
+                      <th> datafine </th>
+                    </tr> 
+                    <tbody  class id="CorsiTab"> 
+                    </tbody>
+                </table><br>
+
+
+                <h1> Corsi frequentati</h1>
+                <table class="table table-striped">
+                    <tr>
+                      <th> codcorso </th>
+                      <th> nome </th>
+                      <th> professore </th>
+                      <th> datainizio </th>
+                      <th> datafine </th>
+                    </tr> 
+                    <tbody  class id="IscTab"> 
+                    </tbody>
+                </table>
+
+            <center>
+
+                <button class="open-button" onclick="openForm('userform')">Iscriviti a corso</button>
+                <div class="form-popup" id="userform" >
+                
+                    <form method="POST" class="form-container" name="userform">
+                        <label for="codcorso"><b>codcorso</b></label><br>
+                        <input type="text" placeholder="Inserire codice corso" name="codcorso" required>
+                        <br>
+                        
+                        <button type="submit"  class="btn">Aggiungi</button>
+                        <button type="button" class="btn cancel" onclick="closeForm('userform')">Close</button>
+                    </form>
+                </div>
+            </center>
+        </div>
+       
+    </body>
+
+<script type="text/javascript">
+
+    var corsi = decodeHtml('{{corsi}}');
+    var jcorsi = JSON.parse(corsi);
+    var iscrizioni = decodeHtml('{{iscrizioni}}');
+    var jiscrizioni = JSON.parse(iscrizioni);
+    //console.log( " jcorsiii!!" + jcorsi);
+    //fine variabili
+    //chiamate
+
+    tab_corsi(jcorsi);
+    tab_iscrizioni(jiscrizioni);
+    //funzioni  
+    function tab_corsi(data){
+        var table = document.getElementById('CorsiTab');
+
+        for (var i = 0; i < data.length; i++){
+        var row = `<tr>
+                    <td>${data[i].codcorso}</td>
+                    <td>${data[i].nome}</td>
+                    <td>${data[i].professore}</td>
+                    <td>${data[i].datainizio}</td>
+                    <td>${data[i].datafine}</td>
+                    
+                  </tr>`
+        
+        table.innerHTML += row
+
+
+        }  
+    }
+
+    function tab_iscrizioni(data){
+        var table = document.getElementById('IscTab');
+
+        for (var i = 0; i < data.length; i++){
+        var row = `<tr>
+                    <td>${data[i].codcorso}</td>
+                    <td>${data[i].nome}</td>
+                    <td>${data[i].professore}</td>
+                    <td>${data[i].datainizio}</td>
+                    <td>${data[i].datafine}</td>
+                    
+                  </tr>`
+        
+        table.innerHTML += row
+
+
+        }  
+    }
+    function decodeHtml(html) {
+            var txt = document.createElement("textarea");
+            txt.innerHTML = html;
+            return txt.value;
+    }
+
+
+</script>
+    
+{%endblock%}

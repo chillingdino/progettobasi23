@@ -1,0 +1,72 @@
+{% extends "base.html"%}
+    {%block menu%}
+       
+    {%endblock%}
+    {%block title%}
+        <h1> {{value}}</h1>
+    {%endblock%}
+    {%block content%}
+    
+    <body>
+         
+        <div class="tabedifici">
+            <table class="table table-striped">
+                <tr>
+                    <th> codedificio </th>
+                    <th> indirizzo </th>
+                </tr> 
+                <tbody  class id="EdificiTab"> 
+                </tbody>
+            </table>
+            <button class="open-button" onclick="openForm('edform')">Aggiungi edificio</button>
+            <div class="form-popup" id="edform">
+               
+                <form method="POST" class="form-container" id="eform">
+                    <label for="codedificio"><b>codedicificio</b></label>
+                    <input type="text" placeholder="Inserire codice" name="codedificio" required>
+                    <br>
+                    <label for="indirizzo"><b>Indirizzo</b></label><br>
+                    <input type="text" placeholder="inserire indirizzo" name="indirizzo" required>
+
+                    <button type="submit"  class="btn">Aggiungi</button>
+                    <button type="button" class="btn cancel" onclick="closeForm('edform')">Close</button>
+                </form>
+            </div>
+        </div>
+    </body>
+<script type="text/javascript">
+//per vedere tutti gli users da fare tabella
+/*------------------------------------------------------*/
+    var edifici = decodeHtml('{{edifici}}');
+    var jedifici = JSON.parse(edifici);
+    console.log(jedifici);
+    //fine variabili
+    //chiamate
+    tab_edifici(jedifici);
+    //funzioni  
+    function tab_edifici(data){
+        var table = document.getElementById('EdificiTab');
+
+        for (var i = 0; i < data.length; i++){
+        var row = `<tr>
+                        <td>${data[i].codedificio}</td>
+                        <td>${data[i].indirizzo}</td>
+                        
+                  </tr>`
+        
+        table.innerHTML += row
+
+
+        }
+       
+    }
+
+    function decodeHtml(html) {
+            var txt = document.createElement("textarea");
+            txt.innerHTML = html;
+            return txt.value;
+    }
+
+
+</script>
+{%endblock%}

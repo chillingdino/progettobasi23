@@ -1,0 +1,55 @@
+{% extends "base.html"%}
+    {%block menu%}
+        <a href="/login/private/user/lezioni_prenotate">Lezioni prenotate</a>
+        <a href="/login/private/user/iscrizione_corsi">iscrizione corsi</a>
+        
+        
+        
+    {%endblock%}
+    {%block title%}
+        <h1> {{nome}}</h1>
+    {%endblock%}
+    {%block content%}
+    <head>  
+        <link rel="stylesheet" href="{{url_for('static', filename='calendarjs.css')}}" />
+        <script src="{{url_for('static', filename='calendarjs.js')}}"></script>
+    </head>
+
+    <body>
+        
+        <div class="contents">
+            <center>
+                <div id="myCalendar" style="max-width: 800px;">
+                <p>Some data that should be cleared.</p>
+                </div>
+                
+            </center>
+            
+        
+            
+        </div>
+        <br>
+        
+        <center>
+            <p>Info aggiuntive sulla lezione si possono vedere lasciando il cursore sull'evento nel calendario</p>
+            <button class="open-button" onclick="openForm('userform')">Aggiungi prenotazione</button>
+            <div class="form-popup" id="userform" >
+               
+                <form method="POST" class="form-container" name="userform">
+                    <label for="codcorso"><b>codcorso</b></label><br>
+                    <input type="text" placeholder="Inserire codice corso" name="codcorso" required>
+                    <br>
+
+                    <label for="datainizio"><b>data</b></label><br>
+                    <input type="datetime-local"  name="datainizio" required>
+                    <br>
+                    
+                    <button type="submit"  class="btn">Aggiungi</button>
+                    <button type="button" class="btn cancel" onclick="closeForm('userform')">Close</button>
+                </form>
+            </div>
+        </center>
+        
+    </body>
+    
+{%endblock%}

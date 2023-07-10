@@ -1,0 +1,23 @@
+{% extends "base.html"%}
+{%block menu%}
+        <a href="/register">Registrati</a>
+{%endblock%}
+{%block title%}
+{%endblock%}
+
+{% block content %}
+    <form method="POST" action="">
+        <center>
+            <h2>Inserire email e password per accedere </h2>
+            <br>
+            email <input type = "text" name = "email" placeholder="email" required/> <br>
+
+            password <input type = "password" name = "password"placeholder="password"required /> <br>
+            
+            <input type = "submit">
+
+        </center>
+    </form>
+
+
+{% endblock %}

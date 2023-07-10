@@ -1,0 +1,162 @@
+{% extends "base.html"%}
+    {%block menu%}
+        
+    {%endblock%}
+    {%block title%}
+        <h1> {{value}}</h1>
+    {%endblock%}
+    {%block content%}
+    
+    <body>
+        
+    	<div class="tabaule">
+            <table class="table table-striped">
+                <h1> Tutti i corsi:</h1>
+                <br>
+                <!--corsi in corso-->
+                <tr>
+                    <th> codcorso </th>
+                    <th> nome </th>
+                    <th> professore </th>
+                    <th> datainizio </th>
+                    <th> datafine </th>
+                </tr> 
+                <tbody  class id="stat1"> 
+                </tbody>
+            </table>
+            <br>
+                <!--lezioni prof e numero persone + disponibili -->
+             <h1>Lezioni disponibili e prenotazioni:  </h1>
+             <br>
+            <table class="table table-striped">
+                <tr>
+                    <th> corso </th>
+                    <th> aula</th>
+                    <th> datainizio </th>
+                    <th> datafine </th>
+                    <th> capienza </th>
+                    <th> iscritti </th>
+
+                </tr> 
+                <tbody  class id="stat2"> 
+                </tbody>
+            </table>
+            <br>
+            <h1>Iscrizione ai corsi e media età  </h1>
+             <br>
+            <table class="table table-striped">
+                <tr>
+                    <th> corso </th>
+                    <th> professore</th>
+                    <th> datainizio </th>
+                    <th> datafine </th>
+                    <th> iscritti </th>
+                    <th> età media </th>
+
+                </tr> 
+                <tbody  class id="isc"> 
+                </tbody>
+            </table>
+        </div>
+    </body>
+<script type="text/javascript">
+
+    var corsi = decodeHtml('{{corsi}}');
+    var jcorsi = JSON.parse(corsi);
+    var lezioni = decodeHtml('{{lezioni}}');
+    var jlezioni = JSON.parse(lezioni);
+    var iscritti = decodeHtml('{{iscritti}}');
+    var jiscritti = JSON.parse(iscritti);
+    
+    //fine variabili
+    //chiamate
+
+    tab_corsi(jcorsi);
+    tab_lezioni(jlezioni);
+    tab_iscritti(jiscritti);
+    //funzioni  
+    function tab_corsi(data){
+        var table = document.getElementById('stat1');
+
+        for (var i = 0; i < data.length; i++){
+        var row = `<tr>
+                        <td>${data[i].codcorso}</td>
+                        <td>${data[i].nome}</td>
+                        <td>${data[i].professore}</td>
+                        <td>${data[i].datainizio}</td>
+                        <td>${data[i].datafine}</td>
+                        
+                  </tr>`
+        
+        table.innerHTML += row
+
+
+        }  
+    }
+
+    
+    /* controllo se la lezione è online stampo "online", se no la capienza massima della lezione*/
+    function check_online(data, maxpresenti){
+        if (data){
+            console.log("Online");
+            return "Online";
+        }
+        else{
+            console.log(maxpresenti);
+            return maxpresenti;
+        }
+    }
+
+    function tab_lezioni(data){
+        var table = document.getElementById('stat2');
+
+        for (var i = 0; i < data.length; i++){
+        var row = `<tr>
+                        <td>${data[i].corso}</td>
+                        <td>${data[i].aula}</td>
+                        <td>${data[i].datainizio}</td>
+                        <td>${data[i].durata}</td>
+                        <td>${check_online(data[i].online,data[i].maxpresenti)}</td>
+                        <td>${data[i].prenotati}</td>
+                       
+                       
+                        
+                  </tr>`
+        
+        table.innerHTML += row
+
+
+        }  
+    }
+
+
+    function tab_iscritti(data){
+        var table = document.getElementById('isc');
+
+        for (var i = 0; i < data.length; i++){
+        var row = `<tr>
+                        <td>${data[i].nome}</td>
+                        <td>${data[i].professore}</td>
+                        <td>${data[i].datainizio}</td>
+                        <td>${data[i].datafine}</td>
+                        <td>${data[i].prenotati}</td>
+                        <td>${Number(data[i].media).toFixed(2)}</td>
+                       
+                       
+                        
+                  </tr>`
+        
+        table.innerHTML += row
+
+
+        }  
+    }
+    function decodeHtml(html) {
+            var txt = document.createElement("textarea");
+            txt.innerHTML = html;
+            return txt.value;
+    }
+
+
+</script>
+{%endblock%}

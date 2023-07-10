@@ -1,0 +1,207 @@
+
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+  position:absolute;
+  top:0px;
+  left:0px;
+  right:0px;
+  bottom: 0px;
+  overflow:hidden;
+}
+
+
+h1 {
+  text-align: center;
+}
+
+table, th, td {
+  border: 1px solid white;
+  border-collapse: collapse;
+}
+
+th, td {
+  background-color: #96D4D4;
+}
+.content {
+  position:absolute;
+  top:140px;
+  bottom:80px;
+  left:0px;
+  right:0px;
+  overflow:auto;
+  z-index: 100;
+  
+}
+
+.titlepage{
+  top: 130px;
+  text-align: center;
+  font-size: 35px;
+  background-color: #606060;
+}
+.header {
+  background-color:#F08080;
+  text-align: center;
+  position:absolute;
+  top:0px;
+  left:0px;
+  height:100px;
+  right:0px;
+  overflow:hidden;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.header.h1{
+  margin:auto;
+}
+/* Style the top navigation bar */
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 100px;
+  height: 40;
+  z-index: 1;
+
+}
+
+/* Style the topnav links */
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+
+/* Change color on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Style the content */
+.content {
+  background-color: #ddd;
+  padding: 10px;
+
+}
+
+/* Style the footer */
+.footer {
+position: absolute;
+bottom: 0px;
+left: 0px;
+right: 0px;
+height: 80px;
+background:#F08080;
+flex-direction: row;
+display: flex;
+justify-content:space-around;
+}
+.footer a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  margin: auto;
+}
+.footer a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/*---------settings admin-----------------*/
+
+.tabedifici{
+  float: left;
+  padding:20px;
+}
+
+.tabaule{
+  float: left;
+  padding:20px;
+}
+
+.tabcorsi{
+  float:left;
+  padding: 20px;
+}
+
+.open-button {
+  background-color: #555;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+/* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  position: relative;
+  width: 300px;
+  
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 300px;
+  
+  padding: 10px;
+  background-color: white;
+}
+
+/* Full-width input fields */
+.form-container input[type=text] {
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+/* When the inputs get focus, do something 
+.form-container input[type=text]:focus, {
+  background-color: #ddd;
+  outline: none;
+}
+*/
+/* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+
+
