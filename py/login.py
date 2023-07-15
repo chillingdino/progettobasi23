@@ -9,8 +9,6 @@ import json
 #gestione pagina di login(richiamata da href in index)
 login = Blueprint('login', __name__)
 
-
-
 @login.route('/', methods=['GET', 'POST'])
 def log():
 	if request.method == "POST":
@@ -18,7 +16,6 @@ def log():
 		email = str(details['email'])
 		pw = details['password']
 
-        
 		result = db.engine.execute("SELECT * FROM Utenti WHERE (email = %s)", (email))
 		queryUser = result.fetchone()
 		
@@ -139,8 +136,8 @@ def adm_corsi():
 def adm_edifici():
 	if current_user.ruolo == 'admin':
 		if request.method == 'GET':
-			edificiuni = get_jedifici()
 			
+			edificiuni = get_jedifici()
 			return render_template('admin_edifici.html', edifici= edificiuni)
 		else:
 			#POST
@@ -150,8 +147,6 @@ def adm_edifici():
 				flash("Inserimento riuscito", category="alert alert-success")
 			except:
 				flash("Errore inserimento", category="alert alert-warning")
-			
-
 
 			return redirect(url_for('login.adm_edifici'))
 	else:
@@ -176,11 +171,8 @@ def profstat():
 		c = get_jcorsi()
 		i = get_jcorsiprenotazioni()
 		return render_template('prof_statistiche.html', corsi=c, lezioni= p, iscritti=i)
-		
 	else:
 		return redirect(url_for('login.log'))
-
-
 
 #-----------------------------------------------------------------------------------------------
 @login.route('/private/user', methods=['GET','POST'])
