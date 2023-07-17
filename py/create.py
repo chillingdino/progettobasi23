@@ -7,13 +7,12 @@ import subprocess
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 name = "postgres"
-password = "Daniele123"
+password = ""
 namedb = "daisunive"
 
 db = SQLAlchemy()
 login_manager = LoginManager()
 bcrypt = Bcrypt()
-
 
 def create_app():
 	app = Flask(__name__)
@@ -26,8 +25,6 @@ def create_app():
 	db.init_app(app)
 
 	create_tabledb(app)
-
-
 	
 	from .login import login
 	from .home  import home
@@ -43,10 +40,6 @@ def create_app():
 
 	return app
 
-
-
-
-
 #parte per inizializzare db
 #crea tabelle da file sql 
 def create_tabledb(app):
@@ -57,10 +50,8 @@ def create_tabledb(app):
 		with app.app_context():
 			db.engine.execute(text(file_text))
 			db.engine.execute(text(file_insetion))
-
 	except Exception as e:
 		print("tabelle presenti\n")
-
 
 def create_database():
 	try: 

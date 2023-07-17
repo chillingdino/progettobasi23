@@ -1,5 +1,6 @@
-CREATE TYPE role as ENUM('utente', 'professore', 'admin');
-CREATE TYPE valoreProva as ENUM('bonus', 'voto', 'idoneo', 'insuf')
+
+CREATE TYPE ruolo as ENUM('utente', 'professore', 'admin');
+CREATE TYPE valoreProva as ENUM('bonus', 'voto', 'idoneo', 'insuf');
 
 CREATE TABLE Utenti(
 	codFiscale varchar(100)  NOT NULL,
@@ -10,7 +11,7 @@ CREATE TABLE Utenti(
 	cellulare	varchar(50),
 	email		varchar(100) UNIQUE NOT NULL,
 	password	varchar(100) NOT NULL,
-	ruolo		role,
+	ruolo		ruolo,
 PRIMARY KEY (codFiscale)
 );
 
@@ -24,45 +25,45 @@ PRIMARY KEY (codFiscale)
 --iscrizione_prova: risultato <nullable> int, fk prove, fk utente
 
 CREATE TABLE Esami(
-    codEsame varchar(50),
+    codEsame varchar(50) not null,
     materia varchar(50) not null,
     docente varchar(50) not null,
-	PRIMARY KEY (codEsame)
-)
+		PRIMARY KEY (codEsame)
+);
 
 CREATE TABLE Esami_superati(
 	esame varchar(50) NOT NULL,
 	studente varchar(50) NOT NULL,
-    voto int not null,
+  voto int not null,
 	PRIMARY KEY (esame,studente),
 	FOREIGN KEY (studente) REFERENCES Utenti(codFiscale),
-	FOREIGN KEY (esame) REFERENCES Esame(codEsame)
-);
-
-CREATE TABLE Esami_prove(
-	esame varchar(50) NOT NULL,
-	prova varchar(50) NOT NULL,
-	PRIMARY KEY (esame,prova),
-	FOREIGN KEY (prova) REFERENCES Prove(codProva),
-	FOREIGN KEY (esame) REFERENCES Esame(codEsame)
+	FOREIGN KEY (esame) REFERENCES Esami(codEsame)
 );
 
 CREATE TABLE Prove(
-    codProva varchar(50),
+    codProva varchar(50) not null,
+  	esame varchar(50) not null,
     docenteReferente varchar(50),
     tipoProva varchar(50),
     dataProva timestamp not null,
     dataScandenza timestamp not null,
-    FOREIGN KEY (studente) REFERENCES Utenti(codFiscale),
-	FOREIGN KEY (esame) REFERENCES Esame(codEsame)
-)
+  	PRIMARY KEY (codProva),
+		FOREIGN KEY (esame) REFERENCES Esami(codEsame)
+);
 
-CREATE TABLE Iscrizione_prova(
+CREATE TABLE ProvePerEsami(
+	esame varchar(50) NOT NULL,
+	prova varchar(50) NOT NULL,
+	PRIMARY KEY (esame,prova),
+	FOREIGN KEY (prova) REFERENCES Prove(codProva),
+	FOREIGN KEY (esame) REFERENCES Esami(codEsame)
+);
+
+CREATE TABLE Iscrizione_prove(
 	risultato int,
-	prove varchar(50),
+	prova varchar(50),
 	studente varchar(50),
-	FOREIGN KEY (prove) REFERENCES Prove(codProva),
+  PRIMARY KEY (prova,studente),
+	FOREIGN KEY (prova) REFERENCES Prove(codProva),
 	FOREIGN KEY (studente) REFERENCES Utenti(codFiscale)
-)
-
-
+);

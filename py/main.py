@@ -60,14 +60,14 @@ def load_user(codfiscale):
 
 @login_required
 def jsonuser(user):
-    response = {   'id' : user.id,
+    response = {   
+                    'id' : user.id,
                     'nome' : user.nome,
                     'cognome' : user.cognome,
                     'eta' : user.eta,
                     'sesso' : user.email,
                     'cellulare' : user.cellulare,
                     'pwd' : user.pwd
-
                 }
     return response
 

@@ -115,7 +115,6 @@ def adm_corsi():
 
 		if request.method == 'GET':
 			corsiuni = get_jcorsi()
-			
 			return render_template('admin_corsi.html', corsi=corsiuni)
 		else:
 			#POST
@@ -125,7 +124,7 @@ def adm_corsi():
 				flash("Inserimento riuscito", category="alert alert-success")
 			except:
 				flash("Errore inserimento", category="alert alert-warning")
-			
+
 			return redirect(url_for('login.adm_corsi'))
 	else:
 			return redirect(url_for('login.log'))
@@ -136,7 +135,7 @@ def adm_corsi():
 def adm_edifici():
 	if current_user.ruolo == 'admin':
 		if request.method == 'GET':
-			
+
 			edificiuni = get_jedifici()
 			return render_template('admin_edifici.html', edifici= edificiuni)
 		else:
