@@ -8,7 +8,7 @@ import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 name = "postgres"
 password = ""
-namedb = "daisunive"
+namedb = "daisunive6"
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -18,7 +18,7 @@ def create_app():
 	app = Flask(__name__)
 	create_database()
 	app.config['SECRET_KEY'] = 'stringasegreta'
-	app.config['SQLALCHEMY_DATABASE_URI']  = 'postgresql://'+name+':'+password+'@localhost:5432/'+namedb
+	app.config['SQLALCHEMY_DATABASE_URI']  = 'postgresql://'+name+':'+password+'@localhost:5434/'+namedb
 	SQLALCHEMY_TRACK_MODIFICATIONS = True
 	print("\n richiama create_app\n")
 
@@ -43,20 +43,23 @@ def create_app():
 #parte per inizializzare db
 #crea tabelle da file sql 
 def create_tabledb(app):
-	file_text = open("./py/postgre/createdb.sql").read()
-	file_insetion = open("./py/postgre/insert.sql").read()
-	#creazione tabelle database se non presenti e inserzione valori di basi
-	try:
-		with app.app_context():
-			db.engine.execute(text(file_text))
-			db.engine.execute(text(file_insetion))
-	except Exception as e:
-		print("tabelle presenti\n")
+    file_text = open("./py/postgre/createdb.sql").read()
+    file_insetion = open("./py/postgre/insert.sql").read()
+    #creazione tabelle database se non presenti e inserzione valori di basi
+    try:
+        with app.app_context():
+            db.engine.execute(text(file_text))
+            db.engine.execute(text(file_insetion))
+    except Exception as e:
+        print("tabelle presenti\n") 
+
+
+
 
 def create_database():
 	try: 
 		con = psycopg2.connect(dbname='postgres',user=name, host='localhost',
-				password=password) 
+			password=password , port="5434")
 		con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT) 
 		cursor = con.cursor() 
 		exe = "create database "+namedb+";"

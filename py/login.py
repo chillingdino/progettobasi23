@@ -13,7 +13,9 @@ login = Blueprint('login', __name__)
 def log():
 	if request.method == "POST":
 		details = request.form
-		email = str(details['email'])
+		#email = form.email.data
+		#pw = form.email.password
+		email = details['email']
 		pw = details['password']
 
 		result = db.engine.execute("SELECT * FROM Utenti WHERE (email = %s)", (email))

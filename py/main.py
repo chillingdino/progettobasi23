@@ -11,7 +11,7 @@ app.run(debug=True)
  
 app.secret_key = 'super secret key'
 
-app.config['SQLALCHEMY_DATABASE_URI']  = 'postgresql://postgres:Daniele123@localhost:5432/musicstream'
+app.config['SQLALCHEMY_DATABASE_URI']  = 'postgresql://postgres:Daniele123@localhost:5434/musicstream'
 db = SQLAlchemy(app)
 
 
@@ -78,7 +78,7 @@ def jsonuser(user):
 def login():
     if request.method == "POST":
         details = request.form
-        email = str(details['email'])
+        email = details['email']
         pw = details['password']
         
         result = db.engine.execute("SELECT * FROM Utenti WHERE (email = %s)", (email))
