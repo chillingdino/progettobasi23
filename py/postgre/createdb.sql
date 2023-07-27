@@ -34,7 +34,7 @@ CREATE TABLE Esami(
 CREATE TABLE Esami_superati(
 	esame varchar(50) NOT NULL,
 	studente varchar(50) NOT NULL,
-  voto int not null,
+    voto int not null,
 	PRIMARY KEY (esame,studente),
 	FOREIGN KEY (studente) REFERENCES Utenti(codFiscale),
 	FOREIGN KEY (esame) REFERENCES Esami(codEsame)
@@ -48,14 +48,6 @@ CREATE TABLE Prove(
     dataProva timestamp not null,
     dataScandenza timestamp not null,
   	PRIMARY KEY (codProva),
-		FOREIGN KEY (esame) REFERENCES Esami(codEsame)
-);
-
-CREATE TABLE ProvePerEsami(
-	esame varchar(50) NOT NULL,
-	prova varchar(50) NOT NULL,
-	PRIMARY KEY (esame,prova),
-	FOREIGN KEY (prova) REFERENCES Prove(codProva),
 	FOREIGN KEY (esame) REFERENCES Esami(codEsame)
 );
 

@@ -29,6 +29,27 @@ def adm_changerole(data):
 	ruolo = data['changerole']
 	return  db.engine.execute("UPDATE Utenti SET ruolo = %s WHERE codfiscale = %s",ruolo, codice_fiscale)
 
+
+#################### new: 
+
+def insert_esami(data):
+	codeEsame = data['codEsame']
+	materia = data['materia']
+	docente = data['docente']
+	return db.engine.execute("INSERT INTO Esami(codEsame, materia, docente) VALUES (%s,%s, %s)", codeEsame, materia, docente)
+
+
+def insert_prove(data): 
+	codProva = data['codProva']
+	esame = data['esame']
+	docenteReferente = data['docenteReferente']
+	tipoProva = data['tipoProva']
+	dataProva = data['dataProva']
+	return db.engine.execute("INSERT INTO Edifici(codProva, esame, docenteReferente, tipoProva,dataProva ) VALUES (%s,%s, %s, %s, %s)", codProva, esame, docenteReferente, tipoProva, dataProva)
+
+#################### togliere
+
+
 def get_jprenotazionilezioni():
 	result_prenotazioni = db.engine.execute("SELECT * FROM Prenotazioni_lezioni")
 	prenotazioni = result_prenotazioni.fetchall()
