@@ -29,6 +29,43 @@ def adm_changerole(data):
 	ruolo = data['changerole']
 	return  db.engine.execute("UPDATE Utenti SET ruolo = %s WHERE codfiscale = %s",ruolo, codice_fiscale)
 
+
+#################### new: 
+
+def insert_esami(data):
+	codeEsame = data['codEsame']
+	materia = data['materia']
+	docente = data['docente']
+	return db.engine.execute("INSERT INTO Esami(codEsame, materia, docente) VALUES (%s,%s, %s)", codeEsame, materia, docente)
+
+
+def insert_prova(data): 
+	codProva = data['codProva']
+	esame = data['codEsame']
+	docenteReferente = data['docenteReferente']
+	tipoProva = data['tipoProva']
+	dataProva = data['dataProva']
+	return db.engine.execute("INSERT INTO Edifici(codProva, esame, docenteReferente, tipoProva,dataProva ) VALUES (%s,%s, %s, %s, %s)", codProva, esame, docenteReferente, tipoProva, dataProva)
+
+def insert_prenotazioni_prove(data):
+    risultato = data['risultato']
+    codProva = str(data['codProva'])
+    studente = data['studente']
+
+    return db.engine.execute("""
+        INSERT INTO Iscrizione_prove(risultato, prova, studente)
+        VALUES (%s, %s, %s)
+    """, risultato, codProva, studente)
+
+def get_jiscrizione_prova(cfutente):
+	result = db.engine.execute("SELECT * FROM Iscrizione_prove ip NATURAL JOIN Prove p WHERE pp.utente = %s", cfutente)
+	isczione = result.fetchall()
+	jiscrizioni = json.dumps([dict(ix) for ix in isczione],  default=str)
+	
+	return jiscrizioni
+#################### togliere
+
+
 def get_jprenotazionilezioni():
 	result_prenotazioni = db.engine.execute("SELECT * FROM Prenotazioni_lezioni")
 	prenotazioni = result_prenotazioni.fetchall()

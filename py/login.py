@@ -65,9 +65,67 @@ def role():
 			return redirect(url_for('login.role'))
 	else:
 			return redirect(url_for('login.log'))
+	
+@login.route('/private/esami', methods= ['GET', 'POST'])
+@login_required
+def adm_corsi():
+	if current_user.ruolo == 'admin' or current_user.ruolo == 'professore':
+		if request.method == 'GET':
+			corsiuni = get_esami_prenotati()
+			return render_template('admin_corsi.html', corsi=corsiuni)
+		else:
+			#POST
+			data = request.form
+			try:
+				insert_esami(data, current_user)
+				#insert_prove(data, current_user)
+				flash("Inserimento riuscito", category="alert alert-success")
+			except:
+				flash("Errore inserimento", category="alert alert-warning")
+			return redirect(url_for('login.adm_corsi'))
+	else:
+			return redirect(url_for('login.log'))
+	
+@login.route('/private/prove', methods= ['GET', 'POST'])
+@login_required
+def adm_corsi():
+	if current_user.ruolo == 'admin' or current_user.ruolo == 'professore':
+		if request.method == 'GET':
+			corsiuni = get_esami_prenotati()
+			return render_template('admin_corsi.html', corsi=corsiuni)
+		else:
+			#POST
+			data = request.form
+			try:
+				insert_prova(data, current_user)
+				flash("Inserimento riuscito", category="alert alert-success")
+			except:
+				flash("Errore inserimento", category="alert alert-warning")
+			return redirect(url_for('login.adm_corsi'))
+	else:
+			return redirect(url_for('login.log'))
+	
+@login.route('/private/user', methods=['GET','POST'])
+@login_required
+def utente():
+	if current_user.ruolo =='utente':
+		jprenotazioni = get_jiscrizione_prova()
+		if request.method == 'GET':
+			return render_template('user.html', value='current_user.nome', prenotazioni=jprenotazioni)
+		else:
+			details = request.form
+			res = insert_prenotazioni_prove(details, current_user.id)
+			if (not res):
+				flash("Lezione non trovata", category="alert alert-warning")
+			else:
+				flash("Pronatazione avvenuta con successo", category="alert alert-success")
+			return redirect(url_for('login.utente'))
+
+	else:
+		return redirect(url_for('login.log'))
 
 
-
+#----old
 
 #visualizzazione e creazione lezioni
 @login.route('/private/lezioni', methods= ['GET', 'POST'])
@@ -110,26 +168,7 @@ def adm_aule():
 	else:
 			return redirect(url_for('login.log'))
 
-@login.route('/private/corsi', methods= ['GET', 'POST'])
-@login_required
-def adm_corsi():
-	if current_user.ruolo == 'admin' or current_user.ruolo == 'professore':
 
-		if request.method == 'GET':
-			corsiuni = get_jcorsi()
-			return render_template('admin_corsi.html', corsi=corsiuni)
-		else:
-			#POST
-			data = request.form
-			try:
-				insert_corsi(data, current_user)
-				flash("Inserimento riuscito", category="alert alert-success")
-			except:
-				flash("Errore inserimento", category="alert alert-warning")
-
-			return redirect(url_for('login.adm_corsi'))
-	else:
-			return redirect(url_for('login.log'))
 
 
 @login.route('/private/admin/edifici', methods= ['GET', 'POST'])
