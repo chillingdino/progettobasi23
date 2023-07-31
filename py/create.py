@@ -7,8 +7,8 @@ import subprocess
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 name = "postgres"
-password = ""
-namedb = "daisunive6"
+password = "305689"
+namedb = "postgres"
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -59,7 +59,7 @@ def create_tabledb(app):
 def create_database():
 	try: 
 		con = psycopg2.connect(dbname='postgres',user=name, host='localhost',
-			password=password , port="5434")
+			password=password , port="5432")
 		con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT) 
 		cursor = con.cursor() 
 		exe = "create database "+namedb+";"

@@ -82,7 +82,7 @@ def insert_aule(data):
 
 def insert_corsi(data, current_user):
 	if current_user.ruolo == 'professore':
-		professore = current_user.id
+		professore = current_user.id88
 	else:
 		professore = data['professore']
 	if professore == '':
