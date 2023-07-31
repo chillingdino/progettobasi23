@@ -20,15 +20,17 @@ PRIMARY KEY (codFiscale)
 
 --esami: materia, docente <FK>,
 --esami_superati: <fk> esami, fk studente, voto, data_reggistrazione
---esami-prove: <FK> ESAMI, <FK> prove
 --prove: <FK> docente-referente , tipo prova <string>,  valoreProva, data_prova, data_scadenza
 --iscrizione_prova: risultato <nullable> int, fk prove, fk utente
 
 CREATE TABLE Esami(
     codEsame varchar(50) not null,
     materia varchar(50) not null,
-    docente varchar(50) not null,
-		PRIMARY KEY (codEsame)
+    docenteReferente varchar(50) not null,
+	docente varchar(50),
+	FOREIGN KEY (docenteReferente) REFERENCES Utenti(codFiscale),
+	FOREIGN KEY (docente) REFERENCES Utenti(codFiscale),
+	PRIMARY KEY (codEsame)
 );
 
 CREATE TABLE Esami_superati(
@@ -40,6 +42,14 @@ CREATE TABLE Esami_superati(
 	FOREIGN KEY (esame) REFERENCES Esami(codEsame)
 );
 
+CREATE TABLE Risulato_prove(
+	codProva varchar(50) not null,
+	voto varchar(50) not null,
+	studente varchar(50) not null,
+	FOREIGN KEY (prova) REFERENCES Prove(codProva),
+	FOREIGN KEY (studente) REFERENCES Utenti(codFiscale)
+)
+
 CREATE TABLE Prove(
     codProva varchar(50) not null,
   	esame varchar(50) not null,
@@ -47,6 +57,8 @@ CREATE TABLE Prove(
     tipoProva varchar(50),
     dataProva timestamp not null,
     dataScandenza timestamp not null,
+	richestoSuperamentoCodProva varchar(50),
+	completo boolean not null,
   	PRIMARY KEY (codProva),
 	FOREIGN KEY (esame) REFERENCES Esami(codEsame)
 );
@@ -55,7 +67,7 @@ CREATE TABLE Iscrizione_prove(
 	risultato int,
 	prova varchar(50),
 	studente varchar(50),
-  PRIMARY KEY (prova,studente),
+  	PRIMARY KEY (prova,studente),
 	FOREIGN KEY (prova) REFERENCES Prove(codProva),
 	FOREIGN KEY (studente) REFERENCES Utenti(codFiscale)
 );
