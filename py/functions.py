@@ -125,6 +125,7 @@ def prenotazione_posti(data, user):
 		lezione = result_lezione.fetchone()
 		try:
 			ris = db.engine.execute("INSERT INTO Prenotazioni_posti(utente,lezione) VALUES (%s,%s)", user, lezione[0] )
+			
 			return ris
 		except:
 			return None
@@ -176,3 +177,9 @@ def get_jcorsiprenotazioni():
 	fetch = prenotati.fetchall()
 	jprenotati = json.dumps([dict(ix) for ix in fetch],  default=str)
 	return jprenotati
+
+
+
+
+
+
