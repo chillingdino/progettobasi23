@@ -56,6 +56,12 @@ def create_tabledb(app):
 
 
 
+
+
+
+
+		
+
 def create_database():
 	try: 
 		con = psycopg2.connect(dbname='postgres',user=name, host='localhost',

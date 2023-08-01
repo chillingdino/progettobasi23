@@ -79,7 +79,7 @@ def get_jedifici():
 	return jedifici
 
 def get_jaule():
-	result_aule = db.engine.execute("SELECT * FROM aule")
+	result_aule = db.engine.execute("SELECT * FROM risultato")
 	aule = result_aule.fetchall()
 	jaule = json.dumps([dict(ix) for ix in aule],  default=str)
 	return jaule
