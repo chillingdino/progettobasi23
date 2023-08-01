@@ -14,13 +14,112 @@
     </head>
 
     <body>
-        
         <div class="contents">
             <center>
-                <div id="myCalendar" style="max-width: 800px;"/>
+                <h1> Tutti le prove</h1>
+                <table class="table table-striped">
+                    <tr>
+                      <th> codProva </th>
+                      <th> esame </th>
+                      <th> docenteReferente </th>
+                      <th> tipoProva </th>
+                      <th> dataProva </th>
+                      <th>  dataScandenza </th>
+                      
+                    </tr> 
+                    <tbody  class id="CorsiTab"> 
+                    </tbody>
+                </table><br>
+
+
+                <h1> Risultato prove</h1>
+                <table class="table table-striped">
+                    <tr>
+                      <th> codProva </th>
+                      <th> voto </th>
+                      <th> studente </th>
+                      
+                    </tr> 
+                    <tbody  class id="IscTab"> 
+                    </tbody>
+                </table>
+
+            <center>
+
+                <button class="open-button" onclick="openForm('userform')">Iscriviti a prova</button>
+                <div class="form-popup" id="userform" >
+                
+                    <form method="POST" class="form-container" name="userform">
+                        <label for="codcorso"><b>codProva</b></label><br>
+                        <input type="text" placeholder="Inserire codice corso" name="codcorso" required>
+                        <br>
+                        
+                        <button type="submit"  class="btn">Aggiungi</button>
+                        <button type="button" class="btn cancel" onclick="closeForm('userform')">Close</button>
+                    </form>
+                </div>
             </center>
         </div>
        
     </body>
+
+<script type="text/javascript">
+
+    var corsi = decodeHtml('{{corsi}}');
+    var jcorsi = JSON.parse(corsi);
+    var iscrizioni = decodeHtml('{{iscrizioni}}');
+    var jiscrizioni = JSON.parse(iscrizioni);
+    //console.log( " jcorsiii!!" + jcorsi);
+    //fine variabili
+    //chiamate
+
+    tab_corsi(jcorsi);
+    tab_iscrizioni(jiscrizioni);
+    //funzioni  
+    function tab_corsi(data){
+        var table = document.getElementById('CorsiTab');
+
+        for (var i = 0; i < data.length; i++){
+        var row = `<tr>
+                    <td>${data[i].codcorso}</td>
+                    <td>${data[i].nome}</td>
+                    <td>${data[i].professore}</td>
+                    <td>${data[i].datainizio}</td>
+                    <td>${data[i].datafine}</td>
+                    
+                  </tr>`
+        
+        table.innerHTML += row
+
+
+        }  
+    }
+
+    function tab_iscrizioni(data){
+        var table = document.getElementById('IscTab');
+
+        for (var i = 0; i < data.length; i++){
+        var row = `<tr>
+                    <td>${data[i].codcorso}</td>
+                    <td>${data[i].nome}</td>
+                    <td>${data[i].professore}</td>
+                    <td>${data[i].datainizio}</td>
+                    <td>${data[i].datafine}</td>
+                    
+                  </tr>`
+        
+        table.innerHTML += row
+
+
+        }  
+    }
+    function decodeHtml(html) {
+            var txt = document.createElement("textarea");
+            txt.innerHTML = html;
+            return txt.value;
+    }
+
+
+</script>
     
 {%endblock%}
