@@ -66,9 +66,9 @@ def admin():
 			return redirect(url_for('login.log'))
 	
 #pagina per creare esami
-@login.route('/private/esami', methods= ['GET', 'POST'])
+@login.route('/private/creazioneEsami', methods= ['GET', 'POST'])
 @login_required
-def prof_esami():
+def creazioneEsami():
 	if current_user.ruolo == 'professore':
 		if request.method == 'GET':
 			ris = get_jesami_prof()
@@ -87,9 +87,9 @@ def prof_esami():
 			return redirect(url_for('login.log'))
 	
 #reggistrazione voto studente
-@login.route('/private/reggistrazione', methods= ['GET', 'POST'])
+@login.route('/private/reggistrazioneEsamiSuperati', methods= ['GET', 'POST'])
 @login_required
-def adm_corsi():
+def reggistrazioneEsamiSuperati():
 	if current_user.ruolo == 'professore':
 		if request.method == 'GET':
 			ris = get_stud_reggistrazione_esame_possibile()
@@ -127,7 +127,7 @@ def prof_prove():
 			return redirect(url_for('login.log'))
 	
 #iscrizioni esami 
-@login.route('/private/user', methods=['GET','POST'])
+@login.route('/private/iscrzioneProve', methods=['GET','POST'])
 @login_required
 def utente_iscrizoni():
 	if current_user.ruolo =='utente':
@@ -146,7 +146,7 @@ def utente_iscrizoni():
 		return redirect(url_for('login.log'))
 	
 #pagina inizile user
-@login.route('/private/libretto', methods=['GET','POST'])
+@login.route('/private/utente', methods=['GET','POST'])
 @login_required
 def utente():
 	if current_user.ruolo =='utente':
