@@ -37,6 +37,7 @@ def log():
 	else:
 		return render_template('login.html')  
 
+#permetto il log-out
 @login.route('/logout')
 @login_required
 def logout():
@@ -46,6 +47,7 @@ def logout():
 #admin-----------------------------------------------------------------------------------------
 #----------------------------------------------------------impostazioni tabelle ----------------------
 
+#homepage di admin per cambiare ruoli
 @login.route('/private/admin', methods= ['GET', 'POST'])
 @login_required
 def admin():
@@ -106,7 +108,8 @@ def reggistrazioneEsamiSuperati():
 			return redirect(url_for('login.adm_corsi'))
 	else:
 			return redirect(url_for('login.log'))
-	
+
+#creazione prove
 @login.route('/private/prove', methods= ['GET', 'POST'])
 @login_required
 def prof_prove():
@@ -126,7 +129,7 @@ def prof_prove():
 	else:
 			return redirect(url_for('login.log'))
 	
-#iscrizioni esami 
+#iscrizioni a prove da perte di studente
 @login.route('/private/iscrzioneProve', methods=['GET','POST'])
 @login_required
 def utente_iscrizoni():
@@ -156,7 +159,8 @@ def utente():
 			return render_template('user.html', value='current_user.nome', prove=jprove, esami=jesami )
 	else:
 		return redirect(url_for('login.log'))
-	
+
+#dato appello ritorna tutti coloro che lo hanno passato
 @login.route('/private/risultatoAppello')
 @login_required
 def risultato_appello():
