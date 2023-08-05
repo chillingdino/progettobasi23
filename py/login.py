@@ -38,18 +38,11 @@ def log():
 		return render_template('login.html')  
 
 #admin-----------------------------------------------------------------------------------------
-@login.route('/private/admin/random') #to be removedß
-@login_required
-def admin():
-	if current_user.ruolo == 'admin':
-			jprenotazioni = get_jprenotazionilezioni()
-			return render_template('admin.html', value= current_user.nome, prenotazioni= jprenotazioni)
-
 #----------------------------------------------------------impostazioni tabelle ----------------------
 
-@login.route('/private/admin') #@login.route('/private/admin/roles', methods= ['GET', 'POST'])
+@login.route('/private/admin', methods= ['GET', 'POST'])
 @login_required
-def role():
+def admin():
 	if current_user.ruolo == 'admin':
 		users = get_all_users()
 		jusers = json.dumps([dict(ix) for ix in users],  default=str)
@@ -128,7 +121,7 @@ def prof_prove():
 			return redirect(url_for('login.log'))
 	
 #iscrizioni esami 
-@login.route('/private/useriscrizioni', methods=['GET','POST'])
+@login.route('/private/user', methods=['GET','POST'])
 @login_required
 def utente_iscrizoni():
 	if current_user.ruolo =='utente':
@@ -143,7 +136,6 @@ def utente_iscrizoni():
 			else:
 				flash("Pronatazione avvenuta con successo", category="alert alert-success")
 			return redirect(url_for('login.utente'))
-
 	else:
 		return redirect(url_for('login.log'))
 	
@@ -158,6 +150,5 @@ def utenteLibretto():
 			return render_template('user.html', value='current_user.nome', prove=jprove, esami=jesami )
 	else:
 		return redirect(url_for('login.log'))
-
 
 #----old
