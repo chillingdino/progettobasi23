@@ -73,7 +73,7 @@ def prof_esami():
 	if current_user.ruolo == 'professore':
 		if request.method == 'GET':
 			ris = get_jesami_prof()
-			return render_template('admin_corsi.html', corsi=ris)
+			return render_template('professore.html', corsi=ris)
 		else:
 			#POST
 			data = request.form
