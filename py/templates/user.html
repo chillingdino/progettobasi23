@@ -9,7 +9,16 @@
 
 {% block title %}
     <h1>{{ current_user.nome }}'s Dashboard</h1>
+
+
+    
 {% endblock %}
+
+
+<head>  
+    <link rel="stylesheet" href="{{url_for('static', filename='calendarjs.css')}}" />
+    <script src="{{url_for('static', filename='calendarjs.js')}}"></script>
+</head>
 
 {% block content %}
     <center>
