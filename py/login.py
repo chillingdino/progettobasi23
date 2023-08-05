@@ -142,10 +142,10 @@ def utente_iscrizoni():
 #pagina inizile user
 @login.route('/private/libretto', methods=['GET','POST'])
 @login_required
-def utenteLibretto():
+def utente():
 	if current_user.ruolo =='utente':
-		jprove = get_jiscrizione_prova()
-		jesami = get_jesami_superati()
+		jprove = get_jiscrizione_prova(current_user.id)
+		jesami = get_jesami_superati(current_user.id)
 		if request.method == 'GET':
 			return render_template('user.html', value='current_user.nome', prove=jprove, esami=jesami )
 	else:

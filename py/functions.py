@@ -94,7 +94,7 @@ def insert_esami_superati(data):
 
 
 def get_jesami_superati(cfutente):
-	result = db.engine.execute("SELECT * FROM Esami_superati es WHERE ip.studente = %s", cfutente).fetchall()
+	result = db.engine.execute("SELECT * FROM Esami_superati es WHERE es.studente = %s", cfutente).fetchall()
 	jris = json.dumps([dict(ix) for ix in result],  default=str)
 	
 	return jris
