@@ -15,6 +15,7 @@ def addprofile():
 		return render_template('profileReg.html')
 	else: #if post
 		details = request.form
+		print(details)
 		codfisc = details['codfiscale']
 		firstName = details['fname']
 		lastName = details['lname']

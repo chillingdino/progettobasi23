@@ -38,7 +38,7 @@ def log():
 		return render_template('login.html')  
 
 #admin-----------------------------------------------------------------------------------------
-@login.route('/private/admin')
+@login.route('/private/admin/random') #to be removedß
 @login_required
 def admin():
 	if current_user.ruolo == 'admin':
@@ -47,7 +47,7 @@ def admin():
 
 #----------------------------------------------------------impostazioni tabelle ----------------------
 
-@login.route('/private/admin/roles', methods= ['GET', 'POST'])
+@login.route('/private/admin') #@login.route('/private/admin/roles', methods= ['GET', 'POST'])
 @login_required
 def role():
 	if current_user.ruolo == 'admin':
