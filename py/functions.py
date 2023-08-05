@@ -32,6 +32,7 @@ def adm_changerole(data):
 
 #################### new: 
 
+#crea l'esame
 def insert_esami(data):
 	codeEsame = data['codEsame']
 	materia = data['materia']
@@ -45,7 +46,7 @@ def insert_prova(data):
 	docenteReferente = data['docenteReferente']
 	tipoProva = data['tipoProva']
 	dataProva = data['dataProva']
-	return db.engine.execute("INSERT INTO Edifici(codProva, esame, docenteReferente, tipoProva,dataProva ) VALUES (%s,%s, %s, %s, %s)", codProva, esame, docenteReferente, tipoProva, dataProva)
+	return db.engine.execute("INSERT INTO Prove(codProva, esame, docenteReferente, tipoProva,dataProva ) VALUES (%s,%s, %s, %s, %s)", codProva, esame, docenteReferente, tipoProva, dataProva)
 
 def insert_prenotazioni_prove(data):
     risultato = data['risultato']
@@ -58,11 +59,45 @@ def insert_prenotazioni_prove(data):
     """, risultato, codProva, studente)
 
 def get_jiscrizione_prova(cfutente):
-	result = db.engine.execute("SELECT * FROM Iscrizione_prove ip NATURAL JOIN Prove p WHERE pp.utente = %s", cfutente)
-	isczione = result.fetchall()
-	jiscrizioni = json.dumps([dict(ix) for ix in isczione],  default=str)
+	result = db.engine.execute("SELECT * FROM Iscrizione_prove ip NATURAL JOIN Prove p WHERE ip.studente = %s", cfutente).fetchall()
+	jiscrizioni = json.dumps([dict(ix) for ix in result],  default=str)
 	
 	return jiscrizioni
+
+
+def get_jesami_prof(prof):
+	result = db.engine.execute("SELECT * FROM Esami es NATURAL JOIN Prove p WHERE es.docente = %s", prof).fetchall()
+	jresult = json.dumps([dict(ix) for ix in result],  default=str)
+	return jresult
+
+def get_jprove_prof(prof):
+	result = db.engine.execute("SELECT * FROM Esami es NATURAL JOIN Prove p WHERE es.docente = %s", prof).fetchall()
+	jresult = json.dumps([dict(ix) for ix in result],  default=str)
+	return jresult
+
+
+def get_jrisulato_prove(cfutente):
+	result = db.engine.execute("SELECT * FROM Risulato_prove r WHERE ip.studente = %s", cfutente).fetchall()
+	jris = json.dumps([dict(ix) for ix in result],  default=str)
+	
+	return jris
+
+#per gli esami del prof, tutti gli studenti che hanno passato una prova con richiesta o completo
+def get_stud_reggistrazione_esame_possibile(prof):
+	result = db.engine.execute("SELECT * FROM Risulato_prove r Join Prove p on r.codProva=p.codProva join Esami e on e.codEsame=p.esame WHERE e.docenteReferente = %s and r.voto>18 and (p.completo=true or richestoSuperamentoCodProva in not null) and GETDATE()<p.dataScandenza", prof).fetchall()
+	jris = json.dumps([dict(ix) for ix in result],  default=str)
+	
+	return jris
+#reggistra voto a studente
+def insert_esami_superati(data):
+	return db.engine.execute("INSERT INTO Esami_superati(esame, studente, voto ) VALUES (%s,%s, %s,)", data["codProva"], data["esame"], data["voto"])
+
+
+def get_jesami_superati(cfutente):
+	result = db.engine.execute("SELECT * FROM Esami_superati es WHERE ip.studente = %s", cfutente).fetchall()
+	jris = json.dumps([dict(ix) for ix in result],  default=str)
+	
+	return jris
 #################### togliere
 
 

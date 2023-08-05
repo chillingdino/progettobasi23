@@ -71,3 +71,18 @@ CREATE TABLE Iscrizione_prove(
 	FOREIGN KEY (prova) REFERENCES Prove(codProva),
 	FOREIGN KEY (studente) REFERENCES Utenti(codFiscale)
 );
+
+CREATE TRIGGER ControlloIscrizioneProva
+BEFORE INSERT ON Iscrizione_prove
+WHEN (EXISTS SELECT * FROM Prove p join Risulato_prove pr on codProva=richestoSuperamentoCodProva WHERE (new.prova=p.codProva and pr.student) OR p.richestoSuperamentoCodProva=null)
+BEGIN
+RETURN NULL
+END;
+
+CREATE TRIGGER ControlloCreazioneEsame
+BEFORE INSERT ON Prove
+WHEN (NOT EXISTS SELECT * FROM Esami WHERE new.prova=Esami.codEsame and (new.docenteReferente=Esami.docente OR new.docenteReferente=Esami.docenteReferente)
+BEGIN 
+RETURN NULL
+END;
+
