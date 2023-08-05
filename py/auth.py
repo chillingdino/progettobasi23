@@ -19,21 +19,17 @@ class User(UserMixin):
         self.ruolo = ruolo
         self.active = active
         
-
 def encode_pwd(pwd):
     pw_hash = bcrypt.generate_password_hash(pwd, 10).decode("utf-8")
     return pw_hash
 
-
 def decode_pwd(hash_pwd,real_pwd):
     return bcrypt.check_password_hash(hash_pwd, real_pwd)
-
 
 def get_user_by_email(email):
     ris = db.engine.execute('SELECT * FROM Utenti WHERE email = %s', email)
     user = ris.fetchone()
     return User(user.codfiscale,user.nome,user.cognome,user.eta, user.email,user.sesso,user.cellulare, user.password)
-
 
 @login_manager.user_loader
 def load_user(codfiscale):

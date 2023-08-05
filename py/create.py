@@ -7,8 +7,8 @@ import subprocess
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 name = "postgres"
-password = "305689"
-namedb = "postgres"
+password = ""
+namedb = "daisunive"
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -18,7 +18,7 @@ def create_app():
 	app = Flask(__name__)
 	create_database()
 	app.config['SECRET_KEY'] = 'stringasegreta'
-	app.config['SQLALCHEMY_DATABASE_URI']  = 'postgresql://'+name+':'+password+'@localhost:5434/'+namedb
+	app.config['SQLALCHEMY_DATABASE_URI']  = 'postgresql://'+name+':'+password+'@localhost:5432/'+namedb
 	SQLALCHEMY_TRACK_MODIFICATIONS = True
 	print("\n richiama create_app\n")
 

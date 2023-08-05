@@ -66,9 +66,10 @@ def role():
 	else:
 			return redirect(url_for('login.log'))
 	
+#pagina per creare esami
 @login.route('/private/esami', methods= ['GET', 'POST'])
 @login_required
-def adm_corsi():
+def prof_esami():
 	if current_user.ruolo == 'professore':
 		if request.method == 'GET':
 			ris = get_jesami_prof()
@@ -109,7 +110,7 @@ def adm_corsi():
 	
 @login.route('/private/prove', methods= ['GET', 'POST'])
 @login_required
-def adm_prove():
+def prof_prove():
 	if current_user.ruolo == 'professore':
 		if request.method == 'GET':
 			ris = get_jesami_prof()
@@ -126,9 +127,10 @@ def adm_prove():
 	else:
 			return redirect(url_for('login.log'))
 	
+#iscrizioni esami 
 @login.route('/private/useriscrizioni', methods=['GET','POST'])
 @login_required
-def utenteIscrizoni():
+def utente_iscrizoni():
 	if current_user.ruolo =='utente':
 		jprenotazioni = get_jiscrizione_prova()
 		if request.method == 'GET':

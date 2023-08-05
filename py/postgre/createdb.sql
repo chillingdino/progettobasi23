@@ -64,7 +64,7 @@ CREATE TABLE Prove(
 );
 
 CREATE TABLE Iscrizione_prove(
-	risultato int,
+	risultato int, --perche ce questo boh? 
 	prova varchar(50),
 	studente varchar(50),
   	PRIMARY KEY (prova,studente),
@@ -72,9 +72,13 @@ CREATE TABLE Iscrizione_prove(
 	FOREIGN KEY (studente) REFERENCES Utenti(codFiscale)
 );
 
+--trigger che impedisce iscrizione a prova se studente non ha >18 voto su richiestaprova
 CREATE TRIGGER ControlloIscrizioneProva
 BEFORE INSERT ON Iscrizione_prove
-WHEN (EXISTS SELECT * FROM Prove p join Risulato_prove pr on codProva=richestoSuperamentoCodProva WHERE (new.prova=p.codProva and pr.student) OR p.richestoSuperamentoCodProva=null)
+WHEN (EXISTS 
+		SELECT * 
+		FROM Prove p left join Risulato_prove pr on p.codProva=pr.richestoSuperamentoCodProva 
+		WHERE (new.prova=p.codProva and pr.))
 BEGIN
 RETURN NULL
 END;
