@@ -1,8 +1,7 @@
 -- Insert data into the Utenti table
-INSERT INTO Utenti (codFiscale, nome, cognome, eta, sesso, cellulare, email, password, ruolo)
-VALUES ('admin', 'Admin', 'Admin', 25, 0, '123456789', 'admin@example.com', 'adminpassword', 'admin'),
-       ('student1', 'John', 'Doe', 20, 0, '987654321', 'john.doe@example.com', 'student1password', 'utente'),
-       ('student2', 'Jane', 'Smith', 22, 1, '555555555', 'jane.smith@example.com', 'student2password', 'utente');
+INSERT INTO Utenti VALUES ('admin', 'admin','admin',25,0,'0','admin','$2b$10$aTaqNiv5vBc1SdkscE0TT.cKk9/sQESmt/W2PoZ8vREQ501aA8DiG','admin');
+INSERT INTO Utenti VALUES ('codMario', 'mario','rossi',26,0,'0','emailMario','$2b$10$aTaqNiv5vBc1SdkscE0TT.cKk9/sQESmt/W2PoZ8vREQ501aA8DiG','utente');
+INSERT INTO Utenti VALUES ('codMaria', 'maria','rossi',35,1,'0','emailMaria','$2b$10$aTaqNiv5vBc1SdkscE0TT.cKk9/sQESmt/W2PoZ8vREQ501aA8DiG','utente');
 
 -- Insert data into the Esami_superati table
 INSERT INTO Esami_superati (esame, studente, voto)

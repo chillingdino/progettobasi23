@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 
 {% block menu %}
-<a href="/login/private/user/esami_prenotati">Lezioni prenotate</a>
-<a href="/login/private/user/iscrizione_prove">iscrizione corsi</a>
+<a href="user">Lezioni p1</a>
+    <a href="esami">Esami p2</a>
+    <a href="/private/esami">Esami p2</a>
+
 
 {% endblock %}
 
@@ -10,18 +12,25 @@
     <h1>Welcome, {{ current_user.nome }}!</h1>
 {% endblock %}
 
+<body>
+        
+    <div class="contents">
+        <center>
+            <div id="myCalendar" style="max-width: 800px;">
+            <p>Some data that should be cleared.</p>
+            </div>
+            
+        </center>
+        
+        
+        </div>
+    
+</body>
+
+
 {% block content %}
     <center>
-         <div class="contents">
-            <center>
-                <div id="myCalendar" style="max-width: 800px;">
-                <p>Some data that should be cleared.</p>
-                </div>
-                
-            </center>
-            
-            
-            </div>
+       
         <h2>Subscribed Exams</h2>
         <table class="table table-striped">
             <tr>
@@ -31,12 +40,12 @@
                 <th>Date</th>
                 <th>Status</th>
             </tr>
-            {% for exam in subscribed_exams %}
+            {% for esame in subscribed_exams %}
             <tr>
-                <td>{{ exam.codEsame }}</td>
-                <td>{{ exam.materia }}</td>
-                <td>{{ exam.docenteReferente }}</td>
-                <td>{{ exam.dataProva }}</td>
+                <td>{{ esame.codEsame }}</td>
+                <td>{{ esame.materia }}</td>
+                <td>{{ esame.docenteReferente }}</td>
+                <td>{{ esame.dataProva }}</td>
                 <td>Subscribed</td>
             </tr>
             {% endfor %}
@@ -45,18 +54,18 @@
         <h2>Available Exams for Enrollment</h2>
         <table class="table table-striped">
             <tr>
-                <th>Exam Code</th>
+                <th>esame Code</th>
                 <th>Subject</th>
                 <th>Professor</th>
                 <th>Date</th>
                 <th>Action</th>
             </tr>
-            {% for exam in available_exams %}
+            {% for esame  in available_exams %}
             <tr>
-                <td>{{ exam.codEsame }}</td>
-                <td>{{ exam.materia }}</td>
-                <td>{{ exam.docenteReferente }}</td>
-                <td>{{ exam.dataProva }}</td>
+                <td>{{ esame.codEsame }}</td>
+                <td>{{ esame.materia }}</td>
+                <td>{{ esame.docenteReferente }}</td>
+                <td>{{ esame.dataProva }}</td>
                 <td>
                     <form method="POST" action="">
                         <input type="hidden" name="exam_code" value="{{ exam.codEsame }}">

@@ -127,7 +127,7 @@ def utente_iscrizoni():
 	if current_user.ruolo =='utente':
 		jprenotazioni = get_jiscrizione_prova()
 		if request.method == 'GET':
-			return render_template('user.html', value='current_user.nome', prenotazioni=jprenotazioni)
+			return render_template('homepage_studente.html', value='current_user.nome', prenotazioni=jprenotazioni)
 		else:
 			details = request.form
 			res = insert_prenotazioni_prove(details, current_user.id)
@@ -147,7 +147,7 @@ def utente():
 		jprove = get_jiscrizione_prova(current_user.id)
 		jesami = get_jesami_superati(current_user.id)
 		if request.method == 'GET':
-			return render_template('user.html', value='current_user.nome', prove=jprove, esami=jesami )
+			return render_template('homepage_studente.html', value='current_user.nome', prove=jprove, esami=jesami )
 	else:
 		return redirect(url_for('login.log'))
 
