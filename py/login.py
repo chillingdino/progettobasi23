@@ -36,7 +36,12 @@ def log():
 			return redirect(url_for('login.log'))
 	else:
 		return render_template('login.html')  
-
+	
+@login.route('/logout')
+@login_required
+def logout():
+	logout_user()
+	return redirect(url_for('login.log'))
 #admin-----------------------------------------------------------------------------------------
 #----------------------------------------------------------impostazioni tabelle ----------------------
 
@@ -71,7 +76,7 @@ def prof_esami():
 			#POST
 			data = request.form
 			try:
-				insert_esami(data, current_user)
+				insert_esami(data, current_user.id)
 				#insert_prove(data, current_user)
 				flash("Inserimento riuscito", category="alert alert-success")
 			except:
@@ -92,7 +97,7 @@ def adm_corsi():
 			#POST
 			data = request.form
 			try:
-				insert_esami_superati(data, current_user)
+				insert_esami_superati(data, current_user.id)
 				#insert_prove(data, current_user)
 				flash("Inserimento riuscito", category="alert alert-success")
 			except:
@@ -125,7 +130,7 @@ def prof_prove():
 @login_required
 def utente_iscrizoni():
 	if current_user.ruolo =='utente':
-		jprenotazioni = get_jiscrizione_prova()
+		jprenotazioni = get_jiscrizione_prova(current_user.id)
 		if request.method == 'GET':
 			return render_template('homepage_studente.html', value='current_user.nome', prenotazioni=jprenotazioni)
 		else:
@@ -151,4 +156,17 @@ def utente():
 	else:
 		return redirect(url_for('login.log'))
 
+#dato appello ritorna tutti coloro che lo hanno passato
+@login.route('/private/risultatoAppello')
+@login_required
+def risultato_appello():
+	if current_user.ruolo =='utente' or current_user.ruolo=='professore':
+		try: 
+			my_var = request.args.get('my_var', None)
+			x = get_result_prova(my_var)
+			return render_template('risultatiAppello.html', ris = x )
+		except:
+			return render_template('risultatiAppello.html' )
+	else:
+		return redirect(url_for('login.log'))
 #----old

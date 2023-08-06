@@ -1,4 +1,3 @@
-
 CREATE TYPE ruolo as ENUM('utente', 'professore', 'admin');
 CREATE TYPE valoreProva as ENUM('bonus', 'voto', 'idoneo', 'insuf');
 
@@ -32,22 +31,7 @@ CREATE TABLE Esami(
 	PRIMARY KEY (codEsame)
 );
 
-CREATE TABLE Esami_superati(
-	esame varchar(50) NOT NULL,
-	studente varchar(50) NOT NULL,
-    voto int not null,
-	PRIMARY KEY (esame,studente),
-	FOREIGN KEY (studente) REFERENCES Utenti(codFiscale),
-	FOREIGN KEY (esame) REFERENCES Esami(codEsame)
-);
 
-CREATE TABLE Risulato_prove(
-	codProva varchar(50) not null,
-	voto varchar(50) not null,
-	studente varchar(50) not null,
-	FOREIGN KEY (prova) REFERENCES Prove(codProva),
-	FOREIGN KEY (studente) REFERENCES Utenti(codFiscale)
-)
 
 CREATE TABLE Prove(
     codProva varchar(50) not null,
@@ -63,6 +47,23 @@ CREATE TABLE Prove(
 	FOREIGN KEY (esame) REFERENCES Esami(codEsame)
 );
 
+CREATE TABLE Esami_superati(
+	esame varchar(50) NOT NULL,
+	studente varchar(50) NOT NULL,
+    voto int not null,
+	PRIMARY KEY (esame,studente),
+	FOREIGN KEY (studente) REFERENCES Utenti(codFiscale),
+	FOREIGN KEY (esame) REFERENCES Esami(codEsame)
+);
+
+CREATE TABLE Risulato_prove(
+	prova varchar(50) not null,
+	voto varchar(50) not null,
+	studente varchar(50) not null,
+	FOREIGN KEY (prova) REFERENCES Prove(codProva),
+	FOREIGN KEY (studente) REFERENCES Utenti(codFiscale)
+);
+
 CREATE TABLE Iscrizione_prove(
 	risultato int, --perche ce questo boh? 
 	prova varchar(50),
@@ -71,6 +72,7 @@ CREATE TABLE Iscrizione_prove(
 	FOREIGN KEY (prova) REFERENCES Prove(codProva),
 	FOREIGN KEY (studente) REFERENCES Utenti(codFiscale)
 );
+
 
 --trigger che impedisce iscrizione a prova se studente non ha >18 voto su richiestaprova
 CREATE TRIGGER prevent_iscrizione_prova_requisiti

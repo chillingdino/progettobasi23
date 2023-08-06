@@ -7,8 +7,8 @@ import subprocess
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 name = "postgres"
-password = "305689"
-namedb = "postgres"
+password = ""
+namedb = "daisunive2"
 
 db = SQLAlchemy()
 login_manager = LoginManager()
