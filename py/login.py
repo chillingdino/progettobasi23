@@ -113,7 +113,7 @@ def prof_prove():
 				flash("Inserimento riuscito", category="alert alert-success")
 			except:
 				flash("Errore inserimento", category="alert alert-warning")
-			return redirect(url_for('login.adm_corsi'))
+			return redirect(url_for('login.prof_prove'))
 	else:
 			return redirect(url_for('login.log'))
 
