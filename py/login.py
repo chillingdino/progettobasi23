@@ -154,9 +154,10 @@ def utente_iscrizoni():
 def utente():
 	if current_user.ruolo =='utente':
 		jprove = get_jiscrizione_prova(current_user.id)
+		jproveall = get_all_prove()
 		jesami = get_jesami_superati(current_user.id)
 		if request.method == 'GET':
-			return render_template('user.html', value='current_user.nome', prove=jprove, esami=jesami )
+			return render_template('user.html', value='current_user.nome', prove=jprove, esami=jesami, jproveall=jproveall )
 	else:
 		return redirect(url_for('login.log'))
 
@@ -166,10 +167,8 @@ def utente():
 def risultato_appello():
 	if current_user.ruolo =='utente' or current_user.ruolo=='professore':
 		my_var = request.args.get('my_var', None)
-
-		jprove = get_jiscrizione_prova(current_user.id)
-		jesami = get_jesami_superati(current_user.id)
-		return render_template('user.html', value='current_user.nome', prove=jprove, esami=jesami )
+		x = get_result_prova(my_var)
+		return render_template('risultatiAppello.html', ris = x )
 	else:
 		return redirect(url_for('login.log'))
 #----old

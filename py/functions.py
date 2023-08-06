@@ -33,20 +33,20 @@ def adm_changerole(data):
 #################### new: 
 
 #crea l'esame
-def insert_esami(data):
+def insert_esami(data, docente):
 	codeEsame = data['codEsame']
 	materia = data['materia']
-	docente = data['docente']
+	#docente = data['docente']
 	return db.engine.execute("INSERT INTO Esami(codEsame, materia, docente) VALUES (%s,%s, %s)", codeEsame, materia, docente)
 
 
-def insert_prova(data): 
+def insert_prova(data, user): 
 	codProva = data['codProva']
 	esame = data['codEsame']
-	docenteReferente = data['docenteReferente']
+	#docenteReferente = data['docenteReferente']
 	tipoProva = data['tipoProva']
 	dataProva = data['dataProva']
-	return db.engine.execute("INSERT INTO Prove(codProva, esame, docenteReferente, tipoProva,dataProva ) VALUES (%s,%s, %s, %s, %s)", codProva, esame, docenteReferente, tipoProva, dataProva)
+	return db.engine.execute("INSERT INTO Prove(codProva, esame, docenteReferente, tipoProva,dataProva ) VALUES (%s,%s, %s, %s, %s)", codProva, esame, user, tipoProva, dataProva)
 
 def insert_prenotazioni_prove(data):
     risultato = data['risultato']
@@ -92,10 +92,25 @@ def get_stud_reggistrazione_esame_possibile(prof):
 def insert_esami_superati(data):
 	return db.engine.execute("INSERT INTO Esami_superati(esame, studente, voto ) VALUES (%s,%s, %s,)", data["codProva"], data["esame"], data["voto"])
 
-
+#ritorna esami passati dallo studente
 def get_jesami_superati(cfutente):
 	result = db.engine.execute("SELECT * FROM Esami_superati es WHERE es.studente = %s", cfutente).fetchall()
 	jris = json.dumps([dict(ix) for ix in result],  default=str)
-	
+	return jris
+
+
+def get_result_prova(prova):
+	result = db.engine.execute("SELECT * FROM Prova p inner join Risulato_prove rp WHERE p.codProva=%s", prova).fetchall()
+	jris = json.dumps([dict(ix) for ix in result],  default=str)
+	return jris
+
+def get_all_prove_expect_already_iscritto(cfutente):
+	result = db.engine.execute("SELECT p.codProva, dataProva, p FROM Prove p WHERE p.dataProva>GETDATE() EXCEPT SELECT * FROM Prove p inner join Iscrizione_prove ip on p.codProva=ip.Prova WHERE ip.studente=%s", cfutente).fetchall()
+	jris = json.dumps([dict(ix) for ix in result],  default=str)
+	return jris
+
+def get_all_prove():
+	result = db.engine.execute("SELECT p.codProva, dataProva, p FROM Prove p WHERE p.dataProva>GETDATE()").fetchall()
+	jris = json.dumps([dict(ix) for ix in result],  default=str)
 	return jris
 #################### togliere
