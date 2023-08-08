@@ -6,6 +6,7 @@ from .auth import *
 from .functions import *
 import json
 
+
 #gestione pagina di login(richiamata da href in index)
 login = Blueprint('login', __name__)
 
@@ -125,7 +126,7 @@ def prof_prove():
 @login_required
 def utente_iscrizoni():
 	if current_user.ruolo =='utente':
-		jprenotazioni = get_jiscrizione_prova()
+		jprenotazioni = get_jiscrizione_prova(current_user.id)
 		if request.method == 'GET':
 			return render_template('homepage_studente.html', value='current_user.nome', prenotazioni=jprenotazioni)
 		else:
@@ -147,8 +148,25 @@ def utente():
 		jprove = get_jiscrizione_prova(current_user.id)
 		jesami = get_jesami_superati(current_user.id)
 		if request.method == 'GET':
-			return render_template('homepage_studente.html', value='current_user.nome', prove=jprove, esami=jesami )
+			return render_template('iscrizioni_esami.html', value='current_user.nome', prove=jprove, esami=jesami )
 	else:
 		return redirect(url_for('login.log'))
 
 #----old
+
+@login.route('/private/useriscrizioni', methods=['GET', 'POST'])
+@login_required
+def utenteIscrizoni():
+    if current_user.ruolo == 'utente':
+        esami_disponibili = get_esami_disponibili(current_user.id)  # Funzione che recupera gli esami disponibili per lo studente
+        if request.method == 'POST':
+            details = request.form
+            res = insert_prenotazioni_prove(details, current_user.id)
+            if not res:
+                flash("Esame non trovato", category="alert alert-warning")
+            else:
+                flash("Iscrizione avvenuta con successo", category="alert alert-success")
+            return redirect(url_for('login.utenteIscrizoni'))
+        return render_template('iscrizione_esami.html', esami_disponibili=esami_disponibili)
+    else:
+        return redirect(url_for('login.log'))
