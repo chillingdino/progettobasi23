@@ -47,6 +47,14 @@ th, td {
   background-color: #96D4D4;
 }
 
+p {
+  color: rgb(255, 255, 255); /* Cambia il colore del testo nel paragrafo */
+}
+
+m {
+ color: lightgrey;
+}
+
 /*posizione immagine unive pagina iniziale*/
 .center-image {
   position: fixed;
