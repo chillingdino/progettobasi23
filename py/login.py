@@ -46,14 +46,14 @@ def logout():
 #----------------------------------------------------------impostazioni tabelle ----------------------
 
 #homepage admin, permette di cambiare i ruoli
-@login.route('/private/admin', methods= ['GET', 'POST'])
+@login.route('/private/admin', methods= ['GET', 'POST'])#corretto
 @login_required
 def admin():
 	if current_user.ruolo == 'admin':
 		users = get_all_users()
 		jusers = json.dumps([dict(ix) for ix in users],  default=str)
 		if request.method == 'GET':
-			return render_template('admin_roles.html', value= current_user.nome, all_users = jusers)
+			return render_template('admin.html', value= current_user.nome, all_users = jusers)
 		else:
 			details = request.form
 			try:
@@ -66,13 +66,13 @@ def admin():
 			return redirect(url_for('login.log'))
 	
 #rouolo: prof, pagina per creare esami
-@login.route('/private/esami', methods= ['GET', 'POST'])
+@login.route('/private/creaizoneEsami', methods= ['GET', 'POST'])#corretto
 @login_required
 def prof_esami():
 	if current_user.ruolo == 'professore':
 		if request.method == 'GET':
 			ris = get_jesami_prof(current_user.id)
-			return render_template('professore.html', corsi=ris)
+			return render_template('creazioneEsami.html', corsi=ris)
 		else:
 			#POST
 			data = request.form
@@ -87,7 +87,7 @@ def prof_esami():
 			return redirect(url_for('login.log'))
 	
 #ruolo: prof, homepage professore
-@login.route('/private/libretto', methods=['GET','POST'])
+@login.route('/private/professore', methods=['GET','POST'])#corretto
 @login_required
 def professore():
 	if current_user.ruolo =='prefessore':
@@ -98,13 +98,13 @@ def professore():
 		return redirect(url_for('login.log'))
 	
 #ruolo: prof, creazioni prove
-@login.route('/private/prove', methods= ['GET', 'POST'])
+@login.route('/private/creazioneProve', methods= ['GET', 'POST'])#corretto
 @login_required
 def prof_prove():
 	if current_user.ruolo == 'professore':
 		if request.method == 'GET':
 			ris = get_jesami_prof(current_user.id)
-			return render_template('admin_corsi.html', corsi=ris)
+			return render_template('creazioneProve.html', corsi=ris)
 		else:
 			#POST
 			data = request.form
@@ -117,14 +117,16 @@ def prof_prove():
 	else:
 			return redirect(url_for('login.log'))
 
-#ruolo: studente, reggistrazione voto studente
-@login.route('/private/reggistrazione', methods= ['GET', 'POST'])
+
+
+#ruolo: studente, registrazione esame studente
+@login.route('/private/regEsame', methods= ['GET', 'POST'])#corretto
 @login_required
 def prof_reggistrazioneVoto():
 	if current_user.ruolo == 'professore':
 		if request.method == 'GET':
 			ris = get_stud_reggistrazione_esame_possibile()
-			return render_template('admin_corsi.html', corsi=ris)
+			return render_template('regEsame.html', corsi=ris)
 		else:
 			#POST
 			data = request.form
@@ -134,20 +136,20 @@ def prof_reggistrazioneVoto():
 				flash("Inserimento riuscito", category="alert alert-success")
 			except:
 				flash("Errore inserimento", category="alert alert-warning")
-			return redirect(url_for('login.prof_reggistrazioneVoto'))
+			return redirect(url_for('login.prof_registrazioneVoto'))
 	else:
 			return redirect(url_for('login.log'))
 
 
 	
 #roulo: studente, iscrizioni esami 
-@login.route('/private/user', methods=['GET','POST'])
+@login.route('/private/iscrProve', methods=['GET','POST'])#corretto
 @login_required
 def utente_iscrizoni():
 	if current_user.ruolo =='utente':
 		jprenotazioni = get_jiscrizione_prova(current_user.id)
 		if request.method == 'GET':
-			return render_template('homepage_studente.html', value='current_user.nome', prenotazioni=jprenotazioni)
+			return render_template('iscrProve.html', value='current_user.nome', prenotazioni=jprenotazioni)
 		else:
 			details = request.form
 			res = insert_prenotazioni_prove(details, current_user.id)
@@ -159,29 +161,48 @@ def utente_iscrizoni():
 	else:
 		return redirect(url_for('login.log'))
 	
+
+
 #pagina inizile user
-@login.route('/private/libretto', methods=['GET','POST'])
+@login.route('/private/user', methods=['GET','POST'])#corretto
 @login_required
 def utente():
 	if current_user.ruolo =='utente':
 		jprove = get_jiscrizione_prova(current_user.id)
 		jesami = get_jesami_superati(current_user.id)
 		if request.method == 'GET':
-			return render_template('homepage_studente.html', value='current_user.nome', prove=jprove, esami=jesami )
+			return render_template('user.html', value='current_user.nome', prove=jprove, esami=jesami )
 	else:
 		return redirect(url_for('login.log'))
 
+
+
 #dato appello ritorna tutti coloro che lo hanno passato
-@login.route('/private/risultatoAppello')
+@login.route('/private/risAppello') #corretto
 @login_required
 def risultato_appello():
 	if current_user.ruolo =='utente' or current_user.ruolo=='professore':
 		try: 
 			my_var = request.args.get('my_var', None)
 			x = get_result_prova(my_var)
-			return render_template('risultatiAppello.html', ris = x )
+			return render_template('risAppello.html', ris = x )
 		except:
-			return render_template('risultatiAppello.html' )
+			return render_template('risAppello.html' )
 	else:
 		return redirect(url_for('login.log'))
-#----old
+
+
+
+#informazioni prove e esami, nome prof, date, magari anche durata(?)
+@login.route('/private/infoEsame')
+@login_required
+def risultato_appello():
+	if current_user.ruolo =='utente' or current_user.ruolo=='professore':
+		try: 
+			my_var = request.args.get('my_var', None)
+			x = get_result_prova(my_var)
+			return render_template('infoEsame.html', ris = x )
+		except:
+			return render_template('infoEsame.html' )
+	else:
+		return redirect(url_for('login.log'))

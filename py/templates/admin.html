@@ -1,34 +1,74 @@
 {% extends "base.html"%}
     {%block menu%}
-        <a href="/login/private/admin/roles">tipi account</a>
-        <a href="/login/private/lezioni">Prenota aula per lezioni</a>
-        <a href="/login/private/admin/edifici">Edifici</a>
-        <a href="/login/private/admin/aule">Aule</a>
-        <a href="/login/private/prove">Corsi</a>
+    <a href="/login/logout" class="logout"> LOGOUT </a>
     {%endblock%}
     {%block title%}
         <h1> {{value}}</h1>
+
     {%endblock%}
     {%block content%}
-    <head>  
-        <link rel="stylesheet" href="{{url_for('static', filename='calendarjs.css')}}" />
-        <script src="{{url_for('static', filename='calendarjs.js')}}"></script>
-    </head>
-
-    <body>
-        
-        <div class="contents">
-            <center>
-                <div id="myCalendar" style="max-width: 800px;">
-                <p>Some data that should be cleared.</p>
+        <body>
+            
+            <div class="content">
+                <center>
+                    <table class="table table-striped">
+                    <tr>
+                        <th> codfiscale </th>
+                        <th> nome </th>
+                        <th> cognome </th>
+                        <th> ruolo </th>
+                    </tr> 
+                    <tbody id="myTable"> 
+                    </tbody>
+                </table> 
+                </center>       
+                 <form method="POST" action="">
+                <div class = "form">
+                    <h2>Cambia ruolo</h2>
+                    codicefiscale <input type = "text" name = "codfiscale" /> </br>
+                    <label for="utente">utente <input type="radio" id="utente" name="changerole" value="utente"></label><br>
+                    <label for="professore">professore <input type="radio" id="professore" name="changerole" value="professore"></label><br>
+                    <label for="admin">admin <input type="radio" id="admin" name="changerole" value="admin"></label><br>
+                    <input type = "submit">
                 </div>
-                
-            </center>
-			
-		    
+    			
             </div>
-        
-    </body>
+           
+        </body>
+<script type="text/javascript">
+//per vedere tutti gli users da fare tabella
+
+    var users = decodeHtml('{{all_users}}');
+    var jusers = JSON.parse(users);
+
+    //fine variabili
+    //chiamate
+    table_users(jusers);
+    //funzioni  
+    function table_users(jusers){
+        var table = document.getElementById('myTable');
+
+        for (var i = 0; i < jusers.length; i++){
+        var row = `<tr>
+                        <td>${jusers[i].codfiscale}</td>
+                        <td>${jusers[i].nome}</td>
+                        <td>${jusers[i].cognome}</td>
+                        <td>${jusers[i].ruolo}</td>
+                  </tr>`
+        table.innerHTML += row
 
 
-    {%endblock%}
+        }
+       
+    }
+    function decodeHtml(html) {
+            var txt = document.createElement("textarea");
+            txt.innerHTML = html;
+            return txt.value;
+    }
+
+</script>
+{%endblock%}
+
+
+
