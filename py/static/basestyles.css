@@ -39,12 +39,12 @@ input[type="text"], input[type="password"] {
 }
 
 table, th, td {
-  border: 1px solid white;
+  border: 1px solid rgba(255, 255, 255, 0.693);
   border-collapse: collapse;
 }
 
 th, td {
-  background-color: #96D4D4;
+  background-color: #eda2a2ca;
 }
 
 p {

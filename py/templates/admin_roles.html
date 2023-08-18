@@ -1,15 +1,13 @@
 {% extends "base.html"%}
     {%block menu%}
-    <a href="iscrzioneProve">Corsi</a>
+    <a href="/login/logout" class="logout"> LOGOUT </a>
     {%endblock%}
     {%block title%}
         <h1> {{value}}</h1>
 
-        
     {%endblock%}
     {%block content%}
         <body>
-            
             
             <div class="content">
                 <center>
@@ -22,25 +20,17 @@
                     </tr> 
                     <tbody id="myTable"> 
                     </tbody>
-                </table>        
+                </table> 
+                </center>       
                  <form method="POST" action="">
                 <div class = "form">
                     <h2>Cambia ruolo</h2>
-                    <br>
-
-                    
-                    codicefiscale <input type = "text" name = "codfiscale" /> <br>
-                    
-                    <input type="radio" id="utente" name="changerole" value="utente">
-                    <label for="utente">utente</label><br>
-                    <input type="radio" id="professore" name="changerole" value="professore">
-                    <label for="professore">professore</label><br>
-                    <input type="radio" id="admin" name="changerole" value="admin">
-                    <label for="admin">admin</label><br>
+                    codicefiscale <input type = "text" name = "codfiscale" /> </br>
+                    <label for="utente">utente <input type="radio" id="utente" name="changerole" value="utente"></label><br>
+                    <label for="professore">professore <input type="radio" id="professore" name="changerole" value="professore"></label><br>
+                    <label for="admin">admin <input type="radio" id="admin" name="changerole" value="admin"></label><br>
                     <input type = "submit">
                 </div>
-                    
-                </center>
     			
             </div>
            
