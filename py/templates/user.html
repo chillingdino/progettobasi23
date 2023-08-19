@@ -1,44 +1,25 @@
 {% extends "base.html" %}
 
 {% block menu %}
-<a href="user">Lezioni p1</a>
-    <a href="esami">Esami p2</a>
-    <a href="user">Iscrizione Prove</a>
-
-
+    <a href="regEsame">Esami</a>
+    <a href="iscrProve">Prove</a>
 {% endblock %}
 
 {% block title %}
-    <h1>Welcome, {{ current_user.nome }}!</h1>
+    <h3>Benvenuto, {{ current_user.nome }}!</h3>
 {% endblock %}
-
-<body>
-        
-    <div class="contents">
-        <center>
-            <div id="myCalendar" style="max-width: 800px;">
-            <p>Some data that should be cleared.</p>
-            </div>
-            
-        </center>
-        
-        
-        </div>
-    
-</body>
-
-
 {% block content %}
     <center>
-       
-        <h2>Subscribed Exams</h2>
+        <h5>Esami in programma:</h5>
+        {% if subscribed_exams %}
+        
         <table class="table table-striped">
             <tr>
-                <th>Exam Code</th>
-                <th>Subject</th>
-                <th>Professor</th>
-                <th>Date</th>
-                <th>Status</th>
+                <th>Codice</th>
+                <th>Materia</th>
+                <th>Professore</th>
+                <th>Data</th>
+                <th>Stato</th>
             </tr>
             {% for esame in subscribed_exams %}
             <tr>
@@ -50,30 +31,34 @@
             </tr>
             {% endfor %}
         </table>
-
-        <h2>Available Exams for Enrollment</h2>
+        {% else %}
+        <p>Nessun esame in programma al momento.<br>
+        Se vuoi iscriverti a qualche esame o prova vai nella sezione <a href="regEsame">Esami</a> o nella sezione <a href="iscrProve">Prove.</a></p>
+        
+        {% endif %}
+        <hr class="white-line">
+        <h5>Esami passati:</h5>
+        {% if subscribed_exams %}
         <table class="table table-striped">
             <tr>
-                <th>esame Code</th>
-                <th>Subject</th>
-                <th>Professor</th>
-                <th>Date</th>
-                <th>Action</th>
+                <th>Codice</th>
+                <th>Materia</th>
+                <th>Professore</th>
+                <th>Data</th>
+                <th>Stato</th>
             </tr>
-            {% for esame  in available_exams %}
+            {% for esame in subscribed_exams %}
             <tr>
                 <td>{{ esame.codEsame }}</td>
                 <td>{{ esame.materia }}</td>
                 <td>{{ esame.docenteReferente }}</td>
                 <td>{{ esame.dataProva }}</td>
-                <td>
-                    <form method="POST" action="">
-                        <input type="hidden" name="exam_code" value="{{ exam.codEsame }}">
-                        <input type="submit" value="Enroll">
-                    </form>
-                </td>
+                <td>Subscribed</td>
             </tr>
             {% endfor %}
         </table>
+        {% else %}
+        <p>Non hai passato ancora nessun esame al momento.</p>
+        {% endif %}
     </center>
 {% endblock %}

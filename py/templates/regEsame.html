@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block menu %}
+<!--<a href="user">Lezioni p1</a> credo si possa eliminare perchè non serve più-->
+    <a href="login/private/regEsame">Esami</a>
+    <a href="login/private/iscrProve">Prove</a>
+
+
+{% endblock %}
+
+{% block title %}
+    <h2>Benvenuto, {{ current_user.nome }}!</h2>
+{% endblock %}
+
+<body>
+        
+    <div class="contents">
+        <center>
+            <div id="myCalendar" style="max-width: 800px;">
+            <p>Some data that should be cleared.</p>
+            </div>
+            
+        </center>
+        
+        
+        </div>
+    
+</body>
+
+
+{% block content %}
+    <center>
+        {% if subscribed_exams %}
+        <h5>Esami in programma</h5>
+        <table class="table table-striped">
+            <tr>
+                <th>Codice</th>
+                <th>Materia</th>
+                <th>Professore</th>
+                <th>Data</th>
+                <th>Stato</th>
+            </tr>
+            {% for esame in subscribed_exams %}
+            <tr>
+                <td>{{ esame.codEsame }}</td>
+                <td>{{ esame.materia }}</td>
+                <td>{{ esame.docenteReferente }}</td>
+                <td>{{ esame.dataProva }}</td>
+                <td>Subscribed</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>Nessun esame in programma al momento.<br>
+        Se vuoi iscriverti a qualche esame vai nella sezione <a href="login/private/regEsame">Esami.</a>
+        </p>
+        {% endif %}
+        <!--<h5>Esami a cui puoi iscriverti</h5>
+        <table class="table table-striped">
+            <tr>
+                <th>esame Code</th>
+                <th>Subject</th>
+                <th>Professor</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+            {% for esame  in available_exams %}
+            <tr>
+                <td>{{ esame.codEsame }}</td>
+                <td>{{ esame.materia }}</td>
+                <td>{{ esame.docenteReferente }}</td>
+                <td>{{ esame.dataProva }}</td>
+                <td>
+                    <form method="POST" action="">
+                        <input type="hidden" name="exam_code" value="{{ exam.codEsame }}">
+                        <input type="submit" value="Enroll">
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>-->
+    </center>
+{% endblock %}

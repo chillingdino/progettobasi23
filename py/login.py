@@ -123,7 +123,7 @@ def prof_prove():
 @login.route('/private/regEsame', methods= ['GET', 'POST'])#corretto
 @login_required
 def prof_reggistrazioneVoto():
-	if current_user.ruolo == 'professore':
+	if current_user.ruolo == 'professore': #non so se sia corretto, ma qui ci deve entarre lo studente e non il prof
 		if request.method == 'GET':
 			ris = get_stud_reggistrazione_esame_possibile()
 			return render_template('regEsame.html', corsi=ris)
@@ -142,7 +142,7 @@ def prof_reggistrazioneVoto():
 
 
 	
-#roulo: studente, iscrizioni esami 
+#roulo: studente, iscrizioni prove 
 @login.route('/private/iscrProve', methods=['GET','POST'])#corretto
 @login_required
 def utente_iscrizoni():
@@ -196,7 +196,7 @@ def risultato_appello():
 #informazioni prove e esami, nome prof, date, magari anche durata(?)
 @login.route('/private/infoEsame')
 @login_required
-def risultato_appello():
+def info_esami():
 	if current_user.ruolo =='utente' or current_user.ruolo=='professore':
 		try: 
 			my_var = request.args.get('my_var', None)

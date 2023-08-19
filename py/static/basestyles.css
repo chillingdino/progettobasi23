@@ -15,17 +15,44 @@ body{
 
 /*titolo 1*/
 h1 {
+  background-color: rgb(255, 255, 255,0.5);
   text-align: center;
   font-family: "Arial";
   color: rgb(11, 11, 11);
+  width: 50%; /* Imposta una larghezza fissa del 50% */
+  margin: 0 auto; /* Centra l'elemento orizzontalmente */
+  padding: 20px;
+  border-radius: 20px;
 }
 /*titolo 2*/
 h2 {
+  background-color: rgb(255, 255, 255,0.5);
   text-align: center;
   font-family: "Arial";
-  color: rgba(6, 5, 5, 0.57);
+  color: rgba(6, 5, 5);
 }
 
+h3 {
+  background-color: rgb(255, 255, 255,0.5);
+  text-align: center;
+  font-family: "Arial";
+  color: rgba(6, 5, 5);
+  width: 50%; /* Imposta una larghezza fissa del 50% */
+  margin: 0 auto; /* Centra l'elemento orizzontalmente */
+  padding: 5px;
+  border-radius: 20px;
+}
+
+h5 {
+  text-align: center;
+  font-family: "Arial";
+  color: rgb(255, 255, 255);
+}
+
+.white-line {
+  border: none;
+  border-top: 1px solid white;
+}
 /*per inserire le info*/
 label {
   display: inline-block;
