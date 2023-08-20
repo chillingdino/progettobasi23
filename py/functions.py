@@ -88,6 +88,7 @@ def get_stud_reggistrazione_esame_possibile(prof):
 	jris = json.dumps([dict(ix) for ix in result],  default=str)
 	
 	return jris
+	
 #reggistra voto a studente
 def insert_esami_superati(data):
 	return db.engine.execute("INSERT INTO Esami_superati(esame, studente, voto ) VALUES (%s,%s, %s,)", data["codProva"], data["esame"], data["voto"])

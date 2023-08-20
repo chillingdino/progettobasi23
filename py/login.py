@@ -123,7 +123,7 @@ def prof_prove():
 @login.route('/private/regEsame', methods= ['GET', 'POST'])#corretto
 @login_required
 def prof_reggistrazioneVoto():
-	if current_user.ruolo == 'professore': #non so se sia corretto, ma qui ci deve entarre lo studente e non il prof
+	if current_user.ruolo == 'utente': #non so se sia corretto, ma qui ci deve entarre lo studente e non il prof
 		if request.method == 'GET':
 			ris = get_stud_reggistrazione_esame_possibile()
 			return render_template('regEsame.html', corsi=ris)

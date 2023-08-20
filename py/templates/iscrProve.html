@@ -1,11 +1,10 @@
 {% extends "base.html"%}
     {%block menu%}
-       
-       
-        
+    <a href="user">Indietro</a>
+
     {%endblock%}
     {%block title%}
-        <h1> {{nome}}</h1>
+        <h5> Queste sono le prove a cui puoi iscriverti:</h5>
     {%endblock%}
     {%block content%}
     <head>  
@@ -16,7 +15,7 @@
     <body>
         <div class="contents">
             <center>
-                <h1> Tutti le prove</h1>
+                {% if subscribed_exams %}
                 <table class="table table-striped">
                     <tr>
                       <th> codProva </th>
@@ -30,22 +29,7 @@
                     <tbody  class id="CorsiTab"> 
                     </tbody>
                 </table><br>
-
-
-                <h1> Risultato prove</h1>
-                <table class="table table-striped">
-                    <tr>
-                      <th> codProva </th>
-                      <th> voto </th>
-                      <th> studente </th>
-                      
-                    </tr> 
-                    <tbody  class id="IscTab"> 
-                    </tbody>
-                </table>
-
-            <center>
-
+                <center>
                 <button class="open-button" onclick="openForm('userform')">Iscriviti a prova</button>
                 <div class="form-popup" id="userform" >
                 
@@ -59,6 +43,27 @@
                     </form>
                 </div>
             </center>
+                {% else %}
+                <p>Nessuna prova in programma al momento.<br>
+                Aspetta che qualche professore aggiunga esami a cui iscriversi.</p>
+                {% endif %}
+                <h5> Risultato prove:</h5>
+                {% if subscribed_exams %}
+                <table class="table table-striped">
+                    <tr>
+                      <th> codProva </th>
+                      <th> voto </th>
+                      <th> studente </th>
+                    </tr> 
+                    <tbody  class id="IscTab"> 
+                    </tbody>
+                </table>
+                
+                {% else %}
+                <p>Per il momento non hai superato nessuna prova.</p>
+                {% endif %}
+
+            
         </div>
        
     </body>

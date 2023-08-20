@@ -11,8 +11,7 @@
 {% block content %}
     <center>
         <h5>Esami in programma:</h5>
-        {% if subscribed_exams %}
-        
+        {% if esami %}
         <table class="table table-striped">
             <tr>
                 <th>Codice</th>
@@ -21,7 +20,7 @@
                 <th>Data</th>
                 <th>Stato</th>
             </tr>
-            {% for esame in subscribed_exams %}
+            {% for esami in esame %}
             <tr>
                 <td>{{ esame.codEsame }}</td>
                 <td>{{ esame.materia }}</td>
@@ -38,7 +37,7 @@
         {% endif %}
         <hr class="white-line">
         <h5>Esami passati:</h5>
-        {% if subscribed_exams %}
+        {% if esami %}
         <table class="table table-striped">
             <tr>
                 <th>Codice</th>
@@ -47,7 +46,7 @@
                 <th>Data</th>
                 <th>Stato</th>
             </tr>
-            {% for esame in subscribed_exams %}
+            {% for esami in esame %}
             <tr>
                 <td>{{ esame.codEsame }}</td>
                 <td>{{ esame.materia }}</td>
@@ -58,7 +57,7 @@
             {% endfor %}
         </table>
         {% else %}
-        <p>Non hai passato ancora nessun esame al momento.</p>
+        <p>Al momento non hai superato nessun esame.</p>
         {% endif %}
     </center>
 {% endblock %}
