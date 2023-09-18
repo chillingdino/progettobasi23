@@ -28,9 +28,8 @@ VALUES
 INSERT INTO Esami_superati (esame, studente, voto)
 VALUES
     ('E001', 'CF001', 28),
-    ('E001', 'CF002', 25),
-    ('E001', 'CF001', 30),
-    ('E001', 'CF002', 27);
+    ('E001', 'CF002', 25);
+
 
 -- Inserimento di risultati delle prove
 INSERT INTO Risulato_prove (prova, voto, studente)
