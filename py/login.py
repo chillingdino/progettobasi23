@@ -90,7 +90,7 @@ def prof_esami():
 @login.route('/private/professore', methods=['GET','POST'])#corretto
 @login_required
 def professore():
-	if current_user.ruolo =='prefessore':
+	if current_user.ruolo =='professore':
 		jprove = get_jprove_prof(current_user.id)
 		if request.method == 'GET':
 			return render_template('professore.html', value='current_user.nome', prove=jprove, esami=jesami )
