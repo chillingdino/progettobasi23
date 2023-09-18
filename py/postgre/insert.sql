@@ -7,7 +7,7 @@ VALUES
     ('CF002', 'Laura', 'Bianchi', 22, 0, '+987654321', 'laura@email.com', '$2b$10$aTaqNiv5vBc1SdkscE0TT.cKk9/sQESmt/W2PoZ8vREQ501aA8DiG', 'utente'),
     ('CF003', 'Luigi', 'Verdi', 28, 1, '+555555555', 'luigi@email.com', '$2b$10$aTaqNiv5vBc1SdkscE0TT.cKk9/sQESmt/W2PoZ8vREQ501aA8DiG', 'professore'),
     ('CF004', 'Marco', 'Rossi', 28, 1, '+555555555', 'marco@email.com', '$2b$10$aTaqNiv5vBc1SdkscE0TT.cKk9/sQESmt/W2PoZ8vREQ501aA8DiG', 'professore'),
-    ('CF005', 'Anna', 'Gialli', 20, 0, '+111111111', 'anna@email.com', '$2b$10$aTaqNiv5vBc1SdkscE0TT.cKk9/sQESmt/W2PoZ8vREQ501aA8DiG', 'utente'),
+    ('CF005', 'Anna', 'Gialli', 20, 0, '+111111111', 'anna@email.com', '$2b$10$aTaqNiv5vBc1SdkscE0TT.cKk9/sQESmt/W2PoZ8vREQ501aA8DiG', 'utente');
     
 
 -- Inserimento di esami di prova
@@ -21,8 +21,8 @@ VALUES
 INSERT INTO Prove (codProva, nomeProva, esame, docenteReferente, descrizione, durata, tipoProva, dataProva, dataScandenza, richestoSuperamentoCodProva, completo)
 VALUES
     ('P001', 'Esame Finale', 'E001', 'CF003', 'Esame finale di Matematica', '3 ore', 'voto', '2023-09-30 10:00:00', '2023-09-30 13:00:00', NULL, true),
-    ('P002', 'Esame Parziale', 'E002', 'CF004', 'Esame parziale di Fisica', '2 ore', 'voto', '2023-09-22 14:00:00', '2023-09-22 16:00:00', NULL, false);
-    ('P003', 'Esame Finale', 'E002', 'CF004', 'Esame parziale di Fisica', '2 ore', 'voto', '2023-09-22 14:00:00', '2023-09-22 16:00:00', P2, true);
+    ('P002', 'Esame Parziale', 'E002', 'CF004', 'Esame parziale di Fisica', '2 ore', 'voto', '2023-09-22 14:00:00', '2023-09-22 16:00:00', NULL, false),
+    ('P003', 'Esame Finale', 'E002', 'CF004', 'Esame parziale di Fisica', '2 ore', 'voto', '2023-09-22 14:00:00', '2023-09-22 16:00:00', 'P002', true);
 
 -- Inserimento di esami superati di prova
 INSERT INTO Esami_superati (esame, studente, voto)
