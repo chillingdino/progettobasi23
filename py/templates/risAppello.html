@@ -1,0 +1,91 @@
+{% extends "base.html"%}
+    {%block menu%}
+    <a href="user">Indietro</a>
+    {%endblock%}
+
+    
+        {%block title%}
+            <h5> Risultato prove:</h5>
+        {%endblock%}
+        <body>
+            <div class="contents">
+                <center>
+                {% if subscribed_exams %}
+                <table class="table table-striped">
+                    <tr>
+                      <th> codProva </th>
+                      <th> voto </th>
+                      <th> studente </th>
+                    </tr> 
+                    <tbody  class id="IscTab"> 
+                    </tbody>
+                </table>
+            </center>
+                {% else %}
+                <p>Per il momento non hai superato nessuna prova.</p>
+                {% endif %}
+
+            
+        </div>
+       
+    </body>
+    <script type="text/javascript">
+
+        var corsi = decodeHtml('{{corsi}}');
+        var jcorsi = JSON.parse(corsi);
+        var iscrizioni = decodeHtml('{{iscrizioni}}');
+        var jiscrizioni = JSON.parse(iscrizioni);
+        //console.log( " jcorsiii!!" + jcorsi);
+        //fine variabili
+        //chiamate
+    
+        tab_corsi(jcorsi);
+        tab_iscrizioni(jiscrizioni);
+        //funzioni  
+        function tab_corsi(data){
+            var table = document.getElementById('CorsiTab');
+    
+            for (var i = 0; i < data.length; i++){
+            var row = `<tr>
+                        <td>${data[i].codcorso}</td>
+                        <td>${data[i].nome}</td>
+                        <td>${data[i].professore}</td>
+                        <td>${data[i].datainizio}</td>
+                        <td>${data[i].datafine}</td>
+                        
+                      </tr>`
+            
+            table.innerHTML += row
+    
+    
+            }  
+        }
+    
+        function tab_iscrizioni(data){
+            var table = document.getElementById('IscTab');
+    
+            for (var i = 0; i < data.length; i++){
+            var row = `<tr>
+                        <td>${data[i].codcorso}</td>
+                        <td>${data[i].nome}</td>
+                        <td>${data[i].professore}</td>
+                        <td>${data[i].datainizio}</td>
+                        <td>${data[i].datafine}</td>
+                        
+                      </tr>`
+            
+            table.innerHTML += row
+    
+    
+            }  
+        }
+        function decodeHtml(html) {
+                var txt = document.createElement("textarea");
+                txt.innerHTML = html;
+                return txt.value;
+        }
+    
+    
+    </script>
+        
+    {%endblock%}
