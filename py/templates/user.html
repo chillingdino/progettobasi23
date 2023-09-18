@@ -4,14 +4,13 @@
     <a href="regEsame">Esami</a>
     <a href="iscrProve">Prove</a>
 {% endblock %}
-
 {% block title %}
     <h3>Benvenuto, {{ current_user.nome }}!</h3>
 {% endblock %}
 {% block content %}
     <center>
         <h5>Esami in programma:</h5>
-        {% if esami %}
+        {% if Esami %}
         <table class="table table-striped">
             <tr>
                 <th>Codice</th>
@@ -20,7 +19,9 @@
                 <th>Data</th>
                 <th>Stato</th>
             </tr>
-            {% for esami in esame %}
+            <tbody id="myTable"> 
+            </tbody>
+            <!--{% for esame in esami_in_programma %}
             <tr>
                 <td>{{ esame.codEsame }}</td>
                 <td>{{ esame.materia }}</td>
@@ -28,7 +29,7 @@
                 <td>{{ esame.dataProva }}</td>
                 <td>Subscribed</td>
             </tr>
-            {% endfor %}
+            {% endfor %}-->
         </table>
         {% else %}
         <p>Nessun esame in programma al momento.<br>
@@ -37,7 +38,7 @@
         {% endif %}
         <hr class="white-line">
         <h5>Esami passati:</h5>
-        {% if esami %}
+        {% if Esami_superati %}
         <table class="table table-striped">
             <tr>
                 <th>Codice</th>
@@ -46,7 +47,7 @@
                 <th>Data</th>
                 <th>Stato</th>
             </tr>
-            {% for esami in esame %}
+            {% for esame in esami_passati %}
             <tr>
                 <td>{{ esame.codEsame }}</td>
                 <td>{{ esame.materia }}</td>
