@@ -15,7 +15,7 @@
     <body>
         <div class="contents">
             <center>
-                {% if subscribed_exams %}
+                {% if pronatazioni %}
                 <table class="table table-striped">
                     <tr>
                       <th> codProva </th>
@@ -26,18 +26,16 @@
                       <th>  dataScandenza </th>
                       
                     </tr> 
-                    <tbody  class id="CorsiTab"> 
+                    <tbody  class id="ProveID"> 
                     </tbody>
                 </table><br>
                 <center>
                 <button class="open-button" onclick="openForm('userform')">Iscriviti a prova</button>
                 <div class="form-popup" id="userform" >
-                
                     <form method="POST" class="form-container" name="userform">
-                        <label for="codcorso"><b>codProva</b></label><br>
-                        <input type="text" placeholder="Inserire codice corso" name="codcorso" required>
-                        <br>
-                        
+                        <label for="codProva"><b>codProva</b></label><br>
+                        <input type="text" placeholder="Inserire codice corso" name="codProva" required>
+                        <br>  
                         <button type="submit"  class="btn">Aggiungi</button>
                         <button type="button" class="btn cancel" onclick="closeForm('userform')">Close</button>
                     </form>
@@ -69,29 +67,31 @@
     </body>
 
 <script type="text/javascript">
+    console.log( " jcorsiii!!" );
 
-    var corsi = decodeHtml('{{corsi}}');
-    var jcorsi = JSON.parse(corsi);
-    var iscrizioni = decodeHtml('{{iscrizioni}}');
-    var jiscrizioni = JSON.parse(iscrizioni);
+    var pronatazioni = decodeHtml('{{pronatazioni}}');
+    var jpronatazioni = JSON.parse(pronatazioni);
+    //
     //console.log( " jcorsiii!!" + jcorsi);
     //fine variabili
     //chiamate
 
-    tab_corsi(jcorsi);
-    tab_iscrizioni(jiscrizioni);
+    
+
+    tab_corsi(jpronatazioni);
     //funzioni  
     function tab_corsi(data){
-        var table = document.getElementById('CorsiTab');
-
+        console.log( data);
+        var table = document.getElementById('ProveID');
+        console.log( data[0].codprova);
         for (var i = 0; i < data.length; i++){
         var row = `<tr>
-                    <td>${data[i].codcorso}</td>
-                    <td>${data[i].nome}</td>
-                    <td>${data[i].professore}</td>
-                    <td>${data[i].datainizio}</td>
-                    <td>${data[i].datafine}</td>
-                    
+                    <td>${data[i].codprova}</td>
+                    <td>${data[i].nomeprova}</td>
+                    <td>${data[i].docentereferente}</td>
+                    <td>${data[i].dataprova}</td>
+                    <td>${data[i].tipoprova}</td>
+                    <td>${data[i].datascandenza}</td>
                   </tr>`
         
         table.innerHTML += row
@@ -100,24 +100,6 @@
         }  
     }
 
-    function tab_iscrizioni(data){
-        var table = document.getElementById('IscTab');
-
-        for (var i = 0; i < data.length; i++){
-        var row = `<tr>
-                    <td>${data[i].codcorso}</td>
-                    <td>${data[i].nome}</td>
-                    <td>${data[i].professore}</td>
-                    <td>${data[i].datainizio}</td>
-                    <td>${data[i].datafine}</td>
-                    
-                  </tr>`
-        
-        table.innerHTML += row
-
-
-        }  
-    }
     function decodeHtml(html) {
             var txt = document.createElement("textarea");
             txt.innerHTML = html;

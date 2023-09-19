@@ -9,30 +9,22 @@
 {% endblock %}
 {% block content %}
     <center>
-        <h5>Esami in programma:</h5>
-        {% if Esami %}
+        <h5>Prove in programma:</h5>
+        {% if prove %}
         <table class="table table-striped">
             <tr>
-                <th>Codice</th>
-                <th>Materia</th>
-                <th>Professore</th>
-                <th>Data</th>
-                <th>Stato</th>
+                <th> codProva </th>
+                <th> esame </th>
+                <th> docenteReferente </th>
+                <th> tipoProva </th>
+                <th> dataProva </th>
+                <th> dataScandenza </th>
             </tr>
-            <tbody id="myTable"> 
+            <tbody  class id="ProveID"> 
             </tbody>
-            <!--{% for esame in esami_in_programma %}
-            <tr>
-                <td>{{ esame.codEsame }}</td>
-                <td>{{ esame.materia }}</td>
-                <td>{{ esame.docenteReferente }}</td>
-                <td>{{ esame.dataProva }}</td>
-                <td>Subscribed</td>
-            </tr>
-            {% endfor %}-->
         </table>
         {% else %}
-        <p>Nessun esame in programma al momento.<br>
+        <p>Nessuna prova in programma al momento.<br>
         Se vuoi iscriverti a qualche esame o prova vai nella sezione <a href="regEsame">Esami</a> o nella sezione <a href="iscrProve">Prove.</a></p>
         
         {% endif %}
@@ -61,4 +53,45 @@
         <p>Al momento non hai superato nessun esame.</p>
         {% endif %}
     </center>
+
+
+
+    <script type="text/javascript">
+    
+        var prove = decodeHtml('{{prove}}');
+        var jpronatazioni = JSON.parse(prove);
+        
+    
+        tab_prove(jpronatazioni);
+        //funzioni  
+        function tab_prove(data){
+            console.log( data);
+            var table = document.getElementById('ProveID');
+            console.log( data[0].codprova);
+            for (var i = 0; i < data.length; i++){
+            var row = `<tr>
+                        <td>${data[i].codprova}</td>
+                        <td>${data[i].nomeprova}</td>
+                        <td>${data[i].docentereferente}</td>
+                        <td>${data[i].dataprova}</td>
+                        <td>${data[i].tipoprova}</td>
+                        <td>${data[i].datascandenza}</td>
+                      </tr>`
+            
+            table.innerHTML += row
+    
+    
+            }  
+        }
+    
+        function decodeHtml(html) {
+                var txt = document.createElement("textarea");
+                txt.innerHTML = html;
+                return txt.value;
+        }
+    
+    
+    </script>
+
 {% endblock %}
+

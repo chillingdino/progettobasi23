@@ -48,32 +48,39 @@ def insert_prova(data, user):
 	dataProva = data['dataProva']
 	return db.engine.execute("INSERT INTO Prove(codProva, esame, docenteReferente, tipoProva,dataProva ) VALUES (%s,%s, %s, %s, %s)", codProva, esame, user, tipoProva, dataProva)
 
-def insert_prenotazioni_prove(data):
-    risultato = data['risultato']
-    codProva = str(data['codProva'])
-    studente = data['studente']
+def insert_prenotazioni_prove(data, user):
+	print(data)
 
-    return db.engine.execute("""
-        INSERT INTO Iscrizione_prove(risultato, prova, studente)
-        VALUES (%s, %s, %s)
-    """, risultato, codProva, studente)
+	codProva = str(data['codProva'])
+	
+	return db.engine.execute("""
+        INSERT INTO Iscrizione_prove(prova, studente)
+        VALUES (%s, %s)
+    """, codProva, user)
 
 def get_jiscrizione_prova(cfutente):
-	result = db.engine.execute("SELECT * FROM Iscrizione_prove ip NATURAL JOIN Prove p WHERE ip.studente = %s", cfutente).fetchall()
+	result = db.engine.execute("SELECT * FROM Iscrizione_prove as ip LEFT JOIN Prove as p ON ip.prova=p.codProva  WHERE ip.studente = %s", cfutente).fetchall()
 	jiscrizioni = json.dumps([dict(ix) for ix in result],  default=str)
-	
 	return jiscrizioni
 
 
 def get_jesami_prof(prof):
-	result = db.engine.execute("SELECT * FROM Esami es NATURAL JOIN Prove p WHERE es.docente = %s", prof).fetchall()
+	result = db.engine.execute("SELECT * FROM Esami es LEFT JOIN Prove p ON es.codEsame=p.esame  WHERE es.docente = %s", prof).fetchall()
 	jresult = json.dumps([dict(ix) for ix in result],  default=str)
 	return jresult
 
 def get_jprove_prof(prof):
-	result = db.engine.execute("SELECT * FROM Esami es NATURAL JOIN Prove p WHERE es.docente = %s", prof).fetchall()
+	result = db.engine.execute("SELECT * FROM Esami es LEFT JOIN Prove p ON es.codEsame=p.esame WHERE es.docente = %s", prof).fetchall()
 	jresult = json.dumps([dict(ix) for ix in result],  default=str)
 	return jresult
+
+#ritorna prove a cui l'utente non si e` anora iscritto
+def get_prove_iscrizionePossibile(cfutente):
+	result = db.engine.execute("SELECT * FROM Prove as p WHERE p.codProva NOT IN (SELECT codProva FROM Iscrizione_prove as p2 WHERE p2.studente=%s)", cfutente).fetchall()
+	jresult = json.dumps([dict(ix) for ix in result],  default=str)
+	return jresult
+
+
 
 
 def get_jrisulato_prove(cfutente):

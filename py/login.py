@@ -92,6 +92,7 @@ def prof_esami():
 def professore():
 	if current_user.ruolo =='professore':
 		jprove = get_jprove_prof(current_user.id)
+		jesami = get_jesami_prof(current_user.id)
 		if request.method == 'GET':
 			return render_template('professore.html', value='current_user.nome', prove=jprove, esami=jesami )
 	else:
@@ -147,9 +148,10 @@ def prof_reggistrazioneVoto():
 @login_required
 def utente_iscrizoni():
 	if current_user.ruolo =='utente':
-		jprenotazioni = get_jiscrizione_prova(current_user.id)
+		jprenotazioni = get_prove_iscrizionePossibile(current_user.id)
+		#print(jprenotazioni)
 		if request.method == 'GET':
-			return render_template('iscrProve.html', value='current_user.nome', prenotazioni=jprenotazioni)
+			return render_template('iscrProve.html', value='current_user.nome', pronatazioni=jprenotazioni)
 		else:
 			details = request.form
 			res = insert_prenotazioni_prove(details, current_user.id)
@@ -169,6 +171,7 @@ def utente_iscrizoni():
 def utente():
 	if current_user.ruolo =='utente':
 		jprove = get_jiscrizione_prova(current_user.id)
+		print(jprove)
 		jesami = get_jesami_superati(current_user.id)
 		if request.method == 'GET':
 			return render_template('user.html', value='current_user.nome', prove=jprove, esami=jesami )

@@ -1,1 +1,5 @@
 rimuovere cod -> da prove ecc. -> forse trigger per trovare codice da mettere
+-> vengono troppi triggers
+
+
+sistemare voto su insert.sql Prove, mettere "esame scritto" 
