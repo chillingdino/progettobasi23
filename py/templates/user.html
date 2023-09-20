@@ -22,16 +22,6 @@
                 </tr>
             </thead>
             <tbody id="ProveID">
-                {% for prova in prove %}
-                <tr>
-                    <td>{{ prova.codProva }}</td>
-                    <td>{{ prova.nomeProva }}</td>
-                    <td>{{ prova.docenteReferente }}</td>
-                    <td>{{ prova.tipoProva }}</td>
-                    <td>{{ prova.dataProva }}</td>
-                    <td>{{ prova.dataScandenza }}</td>
-                </tr>
-                {% endfor %}
             </tbody>
         </table>
         {% else %}
@@ -67,18 +57,20 @@
         var prove = decodeHtml('{{ prove }}');
         var jprenotazioni = JSON.parse(prove);
 
+        console.log(jprenotazioni);
+
         tab_prove(jprenotazioni);
 
         function tab_prove(data) {
             var table = document.getElementById('ProveID');
             for (var i = 0; i < data.length; i++) {
                 var row = `<tr>
-                            <td>${data[i].codProva}</td>
-                            <td>${data[i].nomeProva}</td>
-                            <td>${data[i].docenteReferente}</td>
-                            <td>${data[i].tipoProva}</td>
-                            <td>${data[i].dataProva}</td>
-                            <td>${data[i].dataScandenza}</td>
+                            <td>${data[i].codprova}</td>
+                            <td>${data[i].nomeprova}</td>
+                            <td>${data[i].docentereferente}</td>
+                            <td>${data[i].tipoprova}</td>
+                            <td>${data[i].dataprova}</td>
+                            <td>${data[i].datascandenza}</td>
                           </tr>`;
                 table.innerHTML += row;
             }
