@@ -18,26 +18,26 @@
                 {% if pronatazioni %}
                 <table class="table table-striped">
                     <tr>
-                      <th> codProva </th>
-                      <th> esame </th>
-                      <th> docenteReferente </th>
-                      <th> tipoProva </th>
-                      <th> dataProva </th>
-                      <th>  dataScandenza </th>
+                      <th> Codice Prova </th>
+                      <th> Esame </th>
+                      <th> Docente </th>
+                      <th> Tipologia </th>
+                      <th> Data </th>
+                      <th>  Scadenza </th>
                       
                     </tr> 
                     <tbody  class id="ProveID"> 
                     </tbody>
                 </table><br>
                 <center>
-                <button class="open-button" onclick="openForm('userform')">Iscriviti a prova</button>
+                <button class="open-button" onclick="openForm('userform')">Iscriviti</button>
                 <div class="form-popup" id="userform" >
                     <form method="POST" class="form-container" name="userform">
-                        <label for="codProva"><b>codProva</b></label><br>
+                        <label for="codProva"><b>Codice Prova</b></label><br>
                         <input type="text" placeholder="Inserire codice corso" name="codProva" required>
                         <br>  
                         <button type="submit"  class="btn">Aggiungi</button>
-                        <button type="button" class="btn cancel" onclick="closeForm('userform')">Close</button>
+                        <button type="button" class="btn cancel" onclick="closeForm('userform')">Annulla</button>
                     </form>
                 </div>
             </center>
