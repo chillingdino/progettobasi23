@@ -9,15 +9,17 @@
     {%block content%}
     <form method="POST" class="form-container" name="provaform" style="max-width: 600px;">
         <label for="codprova" style="white-space: nowrap; width: 150px;"><b>Codice Prova</b></label>
-        <input type="text" placeholder="Inserire codice prova" name="codprova" required>
+        <input type="text" placeholder="Inserire codice della prova" name="codprova" required>
         <label for="nomeprova"><b>Nome Prova</b></label>
-        <input type="text" placeholder="Inserire nome prova" name="nomeprova" required>
+        <input type="text" placeholder="Inserire nome della prova" name="nomeprova" required>
         <label for="tipoprova" style="white-space: nowrap; width: 150px;"><b>Tipologia Prova</b></label>
-        <input type="text" placeholder="Inserire tipologia prova" name="tipoprova" required>
+        <input type="text" placeholder="Inserire tipologia della prova" name="tipoprova" required>
         <label for="dataprova"><b>Data Prova</b></label>
         <input type="date" name="dataprova" required>
         <label for="datascadenza" style="white-space: nowrap; width: 150px;"><b>Data Scadenza</b></label>
         <input type="date" name="datascadenza" required>
+        <label for="descrizioneMateria" style="white-space: nowrap; width: 150px;"><b>Descrizione Prova:</b></label>
+        <textarea placeholder="Inserire descrizione della prova" name="descrizione" rows="4" cols="50" required></textarea><br>
         <button type="submit" class="btn">Aggiungi</button>
         <button type="button" class="btn cancel" onclick="closeForm('provaform')">Annulla</button>
     </form>
