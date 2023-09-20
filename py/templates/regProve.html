@@ -7,42 +7,24 @@
 {% endblock %}
 
 {%block title%}
-    <h5> Registrazione voto Esame</h5>
+    <h5> Registrazione voto prova</h5>
 {%endblock%}
 {%block content%}
 
-<body>
-    <center>
-            {% if pronatazioni %}
-            <table class="table table-striped">
-                <tr>
-                  <th> Codice Prova </th>
-                  <th> Esame </th>
-                  <th> Docente </th>
-                  <th> Tipologia </th>
-                  <th> Data </th>
-                  <th>  Scadenza </th>
-                  
-                </tr> 
-                <tbody  class id="ProveID"> 
-                </tbody>
-            </table><br>
-            
+<center>
     <button class="open-button" onclick="openForm('userform')">Registra voto prova</button>
     <div class="form-popup" id="userform" >
         <form method="POST" class="form-container" name="userform">
             <label for="codProva"><b>Voto</b></label><br>
-            <input type="text" placeholder="Inserire CodFiscale studente" name="codProva" required>
+            <input type="text" placeholder="Inserire CodFiscale studente" name="studente" required>
             <input type="text" placeholder="Inserire Voto" name="voto" required>
-            <input type="text" placeholder="Inserire Prova" name="studente" required>
+            <input type="text" placeholder="Inserire Prova" name="esame" required>
             <br>  
             <button type="submit"  class="btn">Aggiungi</button>
             <button type="button" class="btn cancel" onclick="closeForm('userform')">Annulla</button>
         </form>
     </div>
-    
 </center>
-</body>
-
 
 {% endblock %}
+

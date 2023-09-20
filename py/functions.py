@@ -91,14 +91,17 @@ def get_jrisulato_prove(cfutente):
 
 #per gli esami del prof, tutti gli studenti che hanno passato una prova con richiesta o completo
 def get_stud_reggistrazione_esame_possibile(prof):
-	result = db.engine.execute("SELECT * FROM Risulato_prove r Join Prove p on r.codProva=p.codProva join Esami e on e.codEsame=p.esame WHERE e.docenteReferente = %s and r.voto>18 and (p.completo=true or richestoSuperamentoCodProva in not null) and GETDATE()<p.dataScandenza", prof).fetchall()
+	result = db.engine.execute("SELECT * FROM Risulato_prove as r LEFT JOIN Prove as p on r.prova=p.codProva join Esami e on e.codEsame=p.esame WHERE e.docenteReferente = %s and CAST(r.voto AS INT)>=18 and (p.completo=true or richestoSuperamentoCodProva is not null) and NOW()<p.dataScandenza", prof).fetchall()
 	jris = json.dumps([dict(ix) for ix in result],  default=str)
 	
 	return jris
 	
 #reggistra voto a studente
-def insert_esami_superati(data):
-	return db.engine.execute("INSERT INTO Esami_superati(esame, studente, voto ) VALUES (%s,%s, %s,)", data["codProva"], data["esame"], data["voto"])
+def insert_esami_superati(data, stud):
+	return db.engine.execute("INSERT INTO Esami_superati(esame, studente, voto ) VALUES (%s,%s, %s,)", data["codProva"], stud, data["voto"])
+
+def insert_esami_superati(data, stud):
+	return db.engine.execute("INSERT INTO Risulato_prove(prova, voto, studente ) VALUES (%s,%s, %s,)", data["codProva"], data["voto"], stud)
 
 #ritorna esami passati dallo studente
 def get_jesami_superati(cfutente):

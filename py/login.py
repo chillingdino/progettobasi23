@@ -65,27 +65,7 @@ def admin():
 	else:
 			return redirect(url_for('login.log'))
 	
-#rouolo: prof, pagina per creare esami
-@login.route('/private/creaizoneEsami', methods= ['GET', 'POST'])#corretto
-@login_required
-def prof_esami():
-	if current_user.ruolo == 'professore':
-		if request.method == 'GET':
-			ris = get_jesami_prof(current_user.id)
-			return render_template('creazioneEsami.html', corsi=ris)
-		else:
-			#POST
-			data = request.form
-			try:
-				insert_esami(data, current_user.id)
-				#insert_prove(data, current_user)
-				flash("Inserimento riuscito", category="alert alert-success")
-			except:
-				flash("Errore inserimento", category="alert alert-warning")
-			return redirect(url_for('login.professore'))
-	else:
-			return redirect(url_for('login.log'))
-	
+#------------------prof----------------------	
 #ruolo: prof, homepage professore
 @login.route('/private/professore', methods=['GET','POST'])#corretto
 @login_required
@@ -118,15 +98,55 @@ def prof_prove():
 	else:
 			return redirect(url_for('login.log'))
 
+#rouolo: prof, pagina per creare esami
+@login.route('/private/creazioneEsami', methods= ['GET', 'POST'])#corretto
+@login_required
+def prof_esami():
+	if current_user.ruolo == 'professore':
+		if request.method == 'GET':
+			ris = get_jesami_prof(current_user.id)
+			return render_template('creazioneEsami.html', corsi=ris)
+		else:
+			#POST
+			data = request.form
+			try:
+				insert_esami(data, current_user.id)
+				#insert_prove(data, current_user)
+				flash("Inserimento riuscito", category="alert alert-success")
+			except:
+				flash("Errore inserimento", category="alert alert-warning")
+			return redirect(url_for('login.professore'))
+	else:
+			return redirect(url_for('login.log'))
 
+#ruolo: prof, registrazione prova studente
+@login.route('/private/regVotoProve', methods= ['GET', 'POST'])#corretto
+@login_required
+def prof_registrazioneVotoProve():
+	if current_user.ruolo == 'professore': 
+		if request.method == 'GET':
+			return render_template('regProve.html')
+		else:
+			#POST
+			data = request.form
+			try:
+				insert_esami_superati(data, current_user.id)
+				#insert_prove(data, current_user)
+				flash("Inserimento riuscito", category="alert alert-success")
+			except Exception as e:
+				print(e)
+				flash("Errore inserimento", category="alert alert-warning")
+			return redirect(url_for('login.prof_registrazioneVotoProve'))
+	else:
+			return redirect(url_for('login.log'))
 
-#ruolo: studente, registrazione esame studente
+#ruolo: prof, registrazione esame studente
 @login.route('/private/regEsame', methods= ['GET', 'POST'])#corretto
 @login_required
-def prof_reggistrazioneVoto():
-	if current_user.ruolo == 'professore': #non so se sia corretto, ma qui ci deve entarre lo studente e non il prof
+def prof_registrazioneVotoEsame():
+	if current_user.ruolo == 'professore': 
 		if request.method == 'GET':
-			ris = get_stud_reggistrazione_esame_possibile()
+			ris = get_stud_reggistrazione_esame_possibile(current_user.id)
 			return render_template('regEsame.html', corsi=ris)
 		else:
 			#POST
@@ -137,11 +157,11 @@ def prof_reggistrazioneVoto():
 				flash("Inserimento riuscito", category="alert alert-success")
 			except:
 				flash("Errore inserimento", category="alert alert-warning")
-			return redirect(url_for('login.prof_registrazioneVoto'))
+			return redirect(url_for('login.prof_registrazioneVotoEsame'))
 	else:
 			return redirect(url_for('login.log'))
 
-
+#------------------studente----------------------
 	
 #roulo: studente, iscrizioni prove 
 @login.route('/private/iscrProve', methods=['GET','POST'])#corretto
@@ -185,7 +205,7 @@ def utente():
 @login.route('/private/risAppello') #corretto
 @login_required
 def risultato_appello():
-	if current_user.ruolo =='utente' or current_user.ruolo=='professore':
+	if current_user.ruolo=='professore':
 		try: 
 			my_var = request.args.get('my_var', None)
 			x = get_result_prova(my_var)
