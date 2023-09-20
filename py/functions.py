@@ -81,8 +81,6 @@ def get_prove_iscrizionePossibile(cfutente):
 	return jresult
 
 
-
-
 def get_jrisulato_prove(cfutente):
 	result = db.engine.execute("SELECT * FROM Risulato_prove r WHERE ip.studente = %s", cfutente).fetchall()
 	jris = json.dumps([dict(ix) for ix in result],  default=str)
@@ -96,9 +94,13 @@ def get_stud_reggistrazione_esame_possibile(prof):
 	
 	return jris
 	
-#reggistra voto a studente
+#reggistra voto esame a studente
 def insert_esami_superati(data):
 	return db.engine.execute("INSERT INTO Esami_superati(esame, studente, voto ) VALUES (%s,%s, %s,)", data["codProva"], data["esame"], data["voto"])
+
+
+def insert_voto_prove(data):
+	return db.engine.execute("INSERT INTO Risulato_prove(prova, voto, studente ) VALUES (%s,%s, %s,)", data["codProva"],  data["voto"],  data["esame"])
 
 #ritorna esami passati dallo studente
 def get_jesami_superati(cfutente):
