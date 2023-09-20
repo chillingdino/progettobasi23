@@ -97,11 +97,11 @@ def get_stud_reggistrazione_esame_possibile(prof):
 	return jris
 	
 #reggistra voto a studente
-def insert_esami_superati(data, stud):
-	return db.engine.execute("INSERT INTO Esami_superati(esame, studente, voto ) VALUES (%s,%s, %s,)", data["codProva"], stud, data["voto"])
+def insert_esami_superati(data):
+	db.engine.execute("INSERT INTO Esami_superati(esame, studente, voto ) VALUES (%s,%s, %i)", data["codProva"], data["studente"], data["voto"])
 
-def insert_esami_superati(data, stud):
-	return db.engine.execute("INSERT INTO Risulato_prove(prova, voto, studente ) VALUES (%s,%s, %s,)", data["codProva"], data["voto"], stud)
+def insert_votoProva(data):
+	db.engine.execute("INSERT INTO Risulato_prove(prova, voto, studente ) VALUES (%s,%s, %s)", data["codProva"], data["voto"],  data["studente"] )
 
 #ritorna esami passati dallo studente
 def get_jesami_superati(cfutente):

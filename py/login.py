@@ -129,8 +129,9 @@ def prof_registrazioneVotoProve():
 		else:
 			#POST
 			data = request.form
+			print(data)
 			try:
-				insert_esami_superati(data, current_user.id)
+				insert_votoProva(data)
 				#insert_prove(data, current_user)
 				flash("Inserimento riuscito", category="alert alert-success")
 			except Exception as e:
@@ -152,7 +153,7 @@ def prof_registrazioneVotoEsame():
 			#POST
 			data = request.form
 			try:
-				insert_esami_superati(data, current_user.id)
+				insert_esami_superati(data)
 				#insert_prove(data, current_user)
 				flash("Inserimento riuscito", category="alert alert-success")
 			except:
