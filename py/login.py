@@ -65,20 +65,8 @@ def admin():
 	else:
 			return redirect(url_for('login.log'))
 	
-#ruolo: prof, homepage professore
-@login.route('/private/professore', methods=['GET','POST'])#corretto
-@login_required
-def professore():
-	if current_user.ruolo =='professore':
-		jprove = get_jprove_prof(current_user.id)
-		jesami = get_jesami_prof(current_user.id)
-		if request.method == 'GET':
-			return render_template('professore.html', value='current_user.nome', prove=jprove, esami=jesami )
-	else:
-		return redirect(url_for('login.log'))
-	
 #rouolo: prof, pagina per creare esami
-@login.route('/private/creazioneEsami', methods= ['GET', 'POST'])#corretto
+@login.route('/private/creaizoneEsami', methods= ['GET', 'POST'])#corretto
 @login_required
 def prof_esami():
 	if current_user.ruolo == 'professore':
@@ -98,8 +86,19 @@ def prof_esami():
 	else:
 			return redirect(url_for('login.log'))
 	
+#ruolo: prof, homepage professore
+@login.route('/private/professore', methods=['GET','POST'])#corretto
+@login_required
+def professore():
+	if current_user.ruolo =='professore':
+		jprove = get_jprove_prof(current_user.id)
+		jesami = get_jesami_prof(current_user.id)
+		if request.method == 'GET':
+			return render_template('professore.html', value='current_user.nome', prove=jprove, esami=jesami )
+	else:
+		return redirect(url_for('login.log'))
 	
-#ruolo: prof, creazione prove
+#ruolo: prof, creazioni prove
 @login.route('/private/creazioneProve', methods= ['GET', 'POST'])#corretto
 @login_required
 def prof_prove():
@@ -115,13 +114,13 @@ def prof_prove():
 				flash("Inserimento riuscito", category="alert alert-success")
 			except:
 				flash("Errore inserimento", category="alert alert-warning")
-			return redirect(url_for('login.professore'))
+			return redirect(url_for('login.prof_prove'))
 	else:
 			return redirect(url_for('login.log'))
 
 
 
-#ruolo: professore, registrazione esame studente
+#ruolo: studente, registrazione esame studente
 @login.route('/private/regEsame', methods= ['GET', 'POST'])#corretto
 @login_required
 def prof_reggistrazioneVoto():
@@ -142,32 +141,15 @@ def prof_reggistrazioneVoto():
 	else:
 			return redirect(url_for('login.log'))
 
-#ruolo: professore, registrazione prove studente
-@login.route('/private/regVotoProve', methods= ['GET', 'POST'])#corretto
-@login_required
-def prof_registrazioneVotoProve():
-	if current_user.ruolo == 'professore': #non so se sia corretto, ma qui ci deve entarre lo studente e non il prof
-		if request.method == 'GET':
-			return render_template('regEsame.html')
-		else:
-			#POST
-			data = request.form
-			try:
-				insert_voto_prove(data, current_user.id)
-				flash("Inserimento riuscito", category="alert alert-success")
-			except:
-				flash("Errore inserimento", category="alert alert-warning")
-			return redirect(url_for('login.prof_registrazioneVoto'))
-	else:
-			return redirect(url_for('login.log'))
-		
+
+	
 #roulo: studente, iscrizioni prove 
 @login.route('/private/iscrProve', methods=['GET','POST'])#corretto
 @login_required
 def utente_iscrizoni():
 	if current_user.ruolo =='utente':
 		jprenotazioni = get_prove_iscrizionePossibile(current_user.id)
-		#print(jprenotazioni)
+		print(jprenotazioni)
 		if request.method == 'GET':
 			return render_template('iscrProve.html', value='current_user.nome', pronatazioni=jprenotazioni)
 		else:
@@ -181,6 +163,8 @@ def utente_iscrizoni():
 	else:
 		return redirect(url_for('login.log'))
 	
+
+
 #pagina inizile user
 @login.route('/private/user', methods=['GET', 'POST'])
 @login_required
@@ -195,11 +179,13 @@ def utente():
 
 
 
+
+
 #dato appello ritorna tutti coloro che lo hanno passato
 @login.route('/private/risAppello') #corretto
 @login_required
 def risultato_appello():
-	if current_user.ruolo=='professore':
+	if current_user.ruolo =='utente' or current_user.ruolo=='professore':
 		try: 
 			my_var = request.args.get('my_var', None)
 			x = get_result_prova(my_var)
@@ -212,7 +198,6 @@ def risultato_appello():
 
 
 #informazioni prove e esami, nome prof, date, magari anche durata(?)
-#bohh
 @login.route('/private/infoEsame')
 @login_required
 def info_esami():

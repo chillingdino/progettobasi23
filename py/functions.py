@@ -76,9 +76,11 @@ def get_jprove_prof(prof):
 
 #ritorna prove a cui l'utente non si e` anora iscritto
 def get_prove_iscrizionePossibile(cfutente):
-	result = db.engine.execute("SELECT * FROM Prove as p WHERE p.codProva NOT IN (SELECT codProva FROM Iscrizione_prove as p2 WHERE p2.studente=%s)", cfutente).fetchall()
+	result = db.engine.execute("SELECT * FROM Prove AS p WHERE p.dataScandenza > CURRENT_TIMESTAMP AND p.codProva NOT IN ( SELECT ip.prova FROM Iscrizione_prove AS ip WHERE ip.studente = %s);", cfutente).fetchall()
 	jresult = json.dumps([dict(ix) for ix in result],  default=str)
 	return jresult
+
+
 
 
 def get_jrisulato_prove(cfutente):
@@ -97,10 +99,6 @@ def get_stud_reggistrazione_esame_possibile(prof):
 #reggistra voto a studente
 def insert_esami_superati(data):
 	return db.engine.execute("INSERT INTO Esami_superati(esame, studente, voto ) VALUES (%s,%s, %s,)", data["codProva"], data["esame"], data["voto"])
-
-
-def insert_voto_prove(data):
-	return db.engine.execute("INSERT INTO Risulato_prove(prova, voto, studente ) VALUES (%s,%s, %s,)", data["codProva"],  data["voto"],  data["esame"])
 
 #ritorna esami passati dallo studente
 def get_jesami_superati(cfutente):

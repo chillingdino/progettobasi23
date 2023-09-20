@@ -64,7 +64,7 @@
 
     <!-- JavaScript per visualizzare la tabella delle prove -->
     <script type="text/javascript">
-        var prove = decodeHtml('{{ prove | tojson | safe }}');
+        var prove = decodeHtml('{{ prove }}');
         var jprenotazioni = JSON.parse(prove);
 
         tab_prove(jprenotazioni);
