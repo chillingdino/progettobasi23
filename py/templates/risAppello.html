@@ -1,91 +1,52 @@
 {% extends "base.html"%}
     {%block menu%}
-    <a href="user">Indietro</a>
+    <a href="/login/private/professore">Home prof</a>
     {%endblock%}
-
-    
         {%block title%}
-            <h5> Risultato prove:</h5>
+            <h5>Risultati di tutti gli studenti alle prove:</h5>
         {%endblock%}
-        <body>
-            <div class="contents">
-                <center>
-                {% if Esami_superati %}
-                <table class="table table-striped">
-                    <tr>
-                      <th> codProva </th>
-                      <th> voto </th>
-                      <th> studente </th>
-                    </tr> 
-                    <tbody  class id="IscTab"> 
-                    </tbody>
-                </table>
-            </center>
-                {% else %}
-                <p>Per il momento non hai superato nessuna prova.</p>
-                {% endif %}
-
-            
-        </div>
-       
-    </body>
-    <script type="text/javascript">
-
-        var corsi = decodeHtml('{{corsi}}');
-        var jcorsi = JSON.parse(corsi);
-        var iscrizioni = decodeHtml('{{iscrizioni}}');
-        var jiscrizioni = JSON.parse(iscrizioni);
-        //console.log( " jcorsiii!!" + jcorsi);
-        //fine variabili
-        //chiamate
+        {%block content%}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Studente</th>
+                    <th>Prova</th>
+                    <th>Voto</th>
+                </tr>
+            </thead>
+            <tbody id="RisID">
+            </tbody>
+            <!--
+                INSERT INTO Risulato_prove (prova, voto, studente)
+VALUES
+    ('P002', '10', 'CF001'),
+    ('P002', '30', 'CF002'),
+    ('P002', '20', 'CF003');-->
+        {%endblock%}
+        <script type="text/javascript">
+            var prove = decodeHtml('{{ risultato_prove }}');
+            var jris = JSON.parse(risultato_prove);
     
-        tab_corsi(jcorsi);
-        tab_iscrizioni(jiscrizioni);
-        //funzioni  
-        function tab_corsi(data){
-            var table = document.getElementById('CorsiTab');
+            console.log(jris);
     
-            for (var i = 0; i < data.length; i++){
-            var row = `<tr>
-                        <td>${data[i].codcorso}</td>
-                        <td>${data[i].nome}</td>
-                        <td>${data[i].professore}</td>
-                        <td>${data[i].datainizio}</td>
-                        <td>${data[i].datafine}</td>
-                        
-                      </tr>`
-            
-            table.innerHTML += row
+            tab_prove(jris);
     
+            function tab_prove(data) {
+                var table = document.getElementById('RisID');
+                for (var i = 0; i < data.length; i++) {
+                    var row = `<tr>
+                                <td>${data[i].studente}</td>
+                                <td>${data[i].prova}</td>
+                                <td>${data[i].voto}</td>
+                              </tr>`;
+                    table.innerHTML += row;
+                }
+            }
     
-            }  
-        }
-    
-        function tab_iscrizioni(data){
-            var table = document.getElementById('IscTab');
-    
-            for (var i = 0; i < data.length; i++){
-            var row = `<tr>
-                        <td>${data[i].codcorso}</td>
-                        <td>${data[i].nome}</td>
-                        <td>${data[i].professore}</td>
-                        <td>${data[i].datainizio}</td>
-                        <td>${data[i].datafine}</td>
-                        
-                      </tr>`
-            
-            table.innerHTML += row
-    
-    
-            }  
-        }
-        function decodeHtml(html) {
+            function decodeHtml(html) {
                 var txt = document.createElement("textarea");
                 txt.innerHTML = html;
                 return txt.value;
-        }
-    
-    
-    </script>
-        
-    {%endblock%}
+            }
+        </script>
+    </center>
