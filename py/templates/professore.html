@@ -1,10 +1,11 @@
 {% extends "base.html"%}
     {%block menu%}
         <a href="creazioneProve">Crea Prove</a>
-        <a href="regVotoProve">Reg Prove</a>
+        <a href="regVotoProve">Registra Prove</a>
         <a href="creazioneEsami">Crea Esame</a>
-        <a href="regEsame">Reg Esame</a>
+        <a href="regEsame">Registra Esame</a>
         <a href="risAppello">Risultati Appello</a>
+        <a href="/login/logout" class="logout">LOGOUT</a>
     {%endblock%}
     {%block title%}
         <h3>Benvenuto, {{current_user.nome}}</h3>

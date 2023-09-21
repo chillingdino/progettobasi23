@@ -135,6 +135,10 @@ m {
   margin:auto;
 }
 
+.header.h1 a {
+  color: rgb(0, 0, 0);
+}
+
 /* gestisce il menu sopra */
 .topnav {
   overflow: hidden;
@@ -220,6 +224,10 @@ z-index: 2;
   border: none;
   cursor: pointer;
   opacity: 0.8;
+}
+
+.header.h1 a {
+  color: white;
 }
 
 /* The popup form - hidden by default */
