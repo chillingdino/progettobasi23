@@ -1,5 +1,7 @@
+<!---->
 {% extends "base.html"%}
     {%block menu%}
+<<<<<<< Updated upstream
         <a href="/login/private/professore">Home prof</a>
     {%endblock%}
     <!--codEsame, materia, docenteReferente, docente-->
@@ -16,4 +18,85 @@
         <button type="button" class="btn cancel" onclick="closeForm('provaform')">Annulla</button>
     </form>
     
+=======
+    <a href="">Home prof</a>
+    <a href="creazioneProve">crea prove</a>
+    <a href="regVotoProve">Reg Prove</a>
+    <a href="creazioneEsami">crea esame</a>
+    <a href="regEsame">reg esame</a>
+    <a href="risAppello">Risultati appello</a>
+    
+    {%endblock%}
+    {%block title%}
+    <h5>Aggiungi una nuovo esame:</h5>
+    {%endblock%}
+    {%block content%}
+    <center>
+        {% if esami %}
+        <table class="table table-striped">
+            <tr>
+              <th> Codice Esame </th>
+              <th> Esame </th>
+              <th> Docente Referente</th>
+              <th> Docente </th>
+            </tr> 
+            <tbody  class id="EsameID"> 
+            </tbody>
+        </table><br>
+
+
+
+        {% else %}
+        <p>Nessuna Esame creato.</p>
+        {% endif %}
+        <form method="POST" class="form-container" name="provaform" style="max-width: 600px;">
+            <label for="codesame" style="white-space: nowrap; width: 150px;"><b>Codice esame</b></label>
+            <input type="text" placeholder="Inserire codice esame" name="codesame" required>
+            <label for="nomeesame"><b>Nome esame</b></label>
+            <input type="text" placeholder="Inserire nome esame" name="materia" required>
+            <label for=docenteaggiuntivo style="white-space: nowrap; width: 150px;"><b>Docente aggiuntivo</b></label>
+            <input type="text" placeholder="Inserire tipologia prova" name="docenteaggiuntivo">
+            <button type="submit" class="btn">Aggiungi</button>
+            <button type="button" class="btn cancel" onclick="closeForm('provaform')">Annulla</button>
+        </form>
+        <center>
+    
+
+<script type="text/javascript">
+    var notjson = decodeHtml('{{esami}}');
+    var jesami = JSON.parse(notjson);
+    //
+    //console.log( " jcorsiii!!" + jcorsi);
+    //fine variabili
+    //chiamate
+
+    tab_corsi(jesami);
+
+    //funzioni  
+    function tab_corsi(data){
+        console.log( data);
+        var table = document.getElementById('EsameID');
+        for (var i = 0; i < data.length; i++){
+        var row = `<tr>
+                    <td>${data[i].codesame}</td>
+                    <td>${data[i].materia}</td>
+                    <td>${data[i].docentereferente}</td>
+                    <td>${data[i].docente}</td>
+                  </tr>`
+        
+        table.innerHTML += row
+
+
+        }  
+    }
+
+    function decodeHtml(html) {
+            var txt = document.createElement("textarea");
+            txt.innerHTML = html;
+            return txt.value;
+    }
+
+
+</script>
+>>>>>>> Stashed changes
     {%endblock%}

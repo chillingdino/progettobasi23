@@ -30,14 +30,17 @@ def adm_changerole(data):
 	return  db.engine.execute("UPDATE Utenti SET ruolo = %s WHERE codfiscale = %s",ruolo, codice_fiscale)
 
 
-#################### new: 
+#################### 
 
 #crea l'esame
-def insert_esami(data, docente):
-	codeEsame = data['codEsame']
-	materia = data['materia']
-	#docente = data['docente']
-	return db.engine.execute("INSERT INTO Esami(codEsame, materia, docente) VALUES (%s,%s, %s)", codeEsame, materia, docente)
+def insert_esami(data, docenteR):
+	codeEsame = data['codesame']
+	materia = data["materia"]
+	docente = docenteR #data['docenteaggiuntivo']
+	print("insert 2 : " +  docenteR)
+	#print(docente)
+
+	return db.engine.execute("INSERT INTO Esami(codEsame, materia, docenteReferente, docente ) VALUES (%s,%s, %s, %s)", codeEsame, materia, docenteR, docenteR)
 
 
 def insert_prova(data, user): 
@@ -58,6 +61,9 @@ def insert_prenotazioni_prove(data, user):
         VALUES (%s, %s)
     """, codProva, user)
 
+
+#- --- - - - -- -  -- - - - - - - - - - -- - - - - GET: 
+
 def get_jiscrizione_prova(cfutente):
 	result = db.engine.execute("SELECT * FROM Iscrizione_prove as ip LEFT JOIN Prove as p ON ip.prova=p.codProva  WHERE ip.studente = %s", cfutente).fetchall()
 	jiscrizioni = json.dumps([dict(ix) for ix in result],  default=str)
@@ -65,8 +71,9 @@ def get_jiscrizione_prova(cfutente):
 
 
 def get_jesami_prof(prof):
-	result = db.engine.execute("SELECT * FROM Esami es LEFT JOIN Prove p ON es.codEsame=p.esame  WHERE es.docente = %s", prof).fetchall()
+	result = db.engine.execute("SELECT * FROM Esami es WHERE es.docenteReferente = %s OR es.docente= %s", prof, prof).fetchall()
 	jresult = json.dumps([dict(ix) for ix in result],  default=str)
+	#print(jresult)
 	return jresult
 
 def get_jprove_prof(prof):

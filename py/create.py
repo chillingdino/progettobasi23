@@ -8,7 +8,7 @@ import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 name = "postgres"
 password = ""
-namedb = "daisunive2"
+namedb = "daisunive8"
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -51,16 +51,9 @@ def create_tabledb(app):
             db.engine.execute(text(file_text))
             db.engine.execute(text(file_insetion))
     except Exception as e:
-        print("tabelle presenti\n") 
+        print('gia prensenti tebales') 
 
 
-
-
-
-
-
-
-		
 
 def create_database():
 	try: 

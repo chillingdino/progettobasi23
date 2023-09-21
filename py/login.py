@@ -105,15 +105,17 @@ def prof_esami():
 	if current_user.ruolo == 'professore':
 		if request.method == 'GET':
 			ris = get_jesami_prof(current_user.id)
-			return render_template('creazioneEsami.html', corsi=ris)
+			return render_template('creazioneEsami.html', esami=ris)
 		else:
 			#POST
-			data = request.form
 			try:
-				insert_esami(data, current_user.id)
+				print("utente: " + current_user.id)
+				insert_esami(request.form, current_user.id)
+
 				#insert_prove(data, current_user)
 				flash("Inserimento riuscito", category="alert alert-success")
-			except:
+			except Exception as e:
+				print(e)
 				flash("Errore inserimento", category="alert alert-warning")
 			return redirect(url_for('login.professore'))
 	else:
