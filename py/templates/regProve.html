@@ -10,19 +10,19 @@
 {%endblock%}
 {%block content%}
 
-<center>
-    <form method="POST" class="form-container" name="userform" style="max-width: 600px;">
-        <label for="codprova" style="white-space: nowrap; width: 150px;"><b>Codice Fiscale dello studente:</b></label>
-        <input type="text" placeholder="Inserire CodFiscale studente" name="studente" required>
-        <label for="codProva" style="white-space: nowrap; width: 150px;"><b>Voto dello studente:</b></label>
-        <input type="text" placeholder="Inserire Voto" name="voto" required>
-        <label for="codProva" style="white-space: nowrap; width: 150px;"><b>Prova eseguita:</b></label>
-        <input type="text" placeholder="Inserire Prova" name="codProva" required>
-        <br>  
-        <button type="submit"  class="btn">Aggiungi</button>
-        <button type="button" class="btn cancel" onclick="closeForm('userform')">Annulla</button>
-    </form>
-</center>
+<form method="POST" class="form-container" name="provaform" style="max-width: 600px;">
+    <label for="prova" style="white-space: nowrap; width: 150px;"><b>Codice Prova</b></label>
+    <input type="text" placeholder="Inserire codice prova" name="prova" required>
+
+    <label for="nomeesame"><b>Voto</b></label>
+    <input type="text" placeholder="Inserire voto" name="voto" required>
+
+    <label for=docenteaggiuntivo style="white-space: nowrap; width: 150px;"><b>Studente</b></label>
+    <input type="text" placeholder="Inserire studente" name="studente">
+    
+    <button type="submit" class="btn">Aggiungi</button>
+    <button type="button" class="btn cancel" onclick="closeForm('provaform')">Annulla</button>
+</form>
 
 {% endblock %}
 

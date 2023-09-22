@@ -23,7 +23,7 @@ PRIMARY KEY (codFiscale)
 
 CREATE TABLE Esami(
     codEsame varchar(50) not null,
-    materia varchar(50) not null, -- cambiarlo in nome esame
+    materia varchar(50) not null,
     docenteReferente varchar(50) not null,
 	docente varchar(50),
 	FOREIGN KEY (docenteReferente) REFERENCES Utenti(codFiscale),

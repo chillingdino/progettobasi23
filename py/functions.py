@@ -38,11 +38,9 @@ def adm_changerole(data):
 def insert_esami(data, docenteR):
 	codeEsame = data['codesame']
 	materia = data["materia"]
-	docente = docenteR #data['docenteaggiuntivo']
-	print("insert 2 : " +  docenteR)
-	#print(docente)
+	doc2 = data.get("docenteaggiuntivo")
 
-	return db.engine.execute("INSERT INTO Esami(codEsame, materia, docenteReferente, docente ) VALUES (%s,%s, %s, %s)", codeEsame, materia, docenteR, docenteR)
+	return db.engine.execute("INSERT INTO Esami(codEsame, materia, docenteReferente, docente ) VALUES (%s,%s, %s, %s)", codeEsame, materia, docenteR, doc2)
 
 
 def insert_prova(data, user): 
@@ -50,15 +48,14 @@ def insert_prova(data, user):
 	nomeprova = data.get('nomeprova') #2
 	esame = data.get('esame') #3
 	#user #4
-	descrizione= data.get('tipoprova') #5
+	descrizione= data.get('descrizione') #5
 	durata = data.get('durata') #6
 	tipoprova = data.get('tipoprova')  #7
-	print(descrizione) 
 	dataprova = data.get('dataprova') #8
 	datascandenza = data.get('datascadenza')#9
 	richiesta = data.get('richiestosuperamentododprova') #10
 	completo = bool(data.get('completo')) #11
-	return db.engine.execute("INSERT INTO Prove(codprova, nomeprova, esame, user, descrizione, durata, tipoProva, dataprova, datascadenza, richiesta, completo) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", codprova, nomeprova, esame, user, descrizione, durata, tipoProva, dataprova, datascadenza, richiesta, completo)
+	return db.engine.execute("INSERT INTO Prove(codProva, nomeProva, esame, docenteReferente, descrizione, durata, tipoProva, dataProva, dataScandenza, richestoSuperamentoCodProva, completo) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", codprova, nomeprova, esame, user, descrizione, durata, tipoprova, dataprova, datascandenza, richiesta, completo)
 													#1		#2			#3	#4			#5		#6			#7			#8			#9			#10		#11				#1  #2  #3  #4  #5  #6  #7  #8  #9  #10 #11		#1			#2		#3		#4		#5		  #6		#7			#8			#9			#10		#11	
 def insert_prenotazioni_prove(data, user):
 	print(data)
@@ -70,6 +67,12 @@ def insert_prenotazioni_prove(data, user):
         VALUES (%s, %s)
     """, codProva, user)
 
+#reggistra voto a studente
+def insert_esami_superati(data):
+	db.engine.execute("INSERT INTO Esami_superati(esame, studente, voto ) VALUES (%s,%s, %i)", data["codProva"], data["studente"], data["voto"])
+
+def insert_votoProva(data):
+	db.engine.execute("INSERT INTO Risulato_prove(prova, voto, studente ) VALUES (%s,%s, %s)",  data["prova"], data["voto"],  data["studente"] )
 
 #- --- - - - -- -  -- - - - - - - - - - -- - - - - GET: 
 
@@ -113,13 +116,6 @@ def get_stud_reggistrazione_esame_possibile(prof):
 	
 	return jris
 	
-#reggistra voto a studente
-def insert_esami_superati(data):
-	db.engine.execute("INSERT INTO Esami_superati(esame, studente, voto ) VALUES (%s,%s, %i)", data["codProva"], data["studente"], data["voto"])
-
-def insert_votoProva(data):
-	db.engine.execute("INSERT INTO Risulato_prove(prova, voto, studente ) VALUES (%s,%s, %s)", data["codProva"], data["voto"],  data["studente"] )
-
 #ritorna esami passati dallo studente
 def get_jesami_superati(cfutente):
 	result = db.engine.execute("SELECT * FROM Esami_superati es WHERE es.studente = %s", cfutente).fetchall()

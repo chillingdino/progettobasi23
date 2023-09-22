@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 
 {% block menu %}
-    <a href="/login/private/professore">Home prof</a>    
+<!--<a href="user">Lezioni p1</a> credo si possa eliminare perchè non serve più-->
+    <a href="login/private/regEsame">Esami</a>
+    <a href="login/private/iscrProve">Prove</a>
 {% endblock %}
-<!--
+
 {%block title%}
     <h5> Registrazione voto Esame</h5>
 {%endblock%}
@@ -14,7 +16,7 @@
             {% if pronatazioni %}
             <table class="table table-striped">
                 <tr>
-                  <th> Codice Prova </th>
+                  <th> Studente </th>
                   <th> Esame </th>
                   <th> Docente </th>
                   <th> Tipologia </th>
@@ -41,5 +43,6 @@
     
 </center>
 </body>
+
+
 {% endblock %}
--->
