@@ -2,6 +2,8 @@ from .create import db
 from .auth import *
 import json
 import re
+from datetime import datetime
+
 
 def get_all_users():
 	users = db.engine.execute("SELECT codfiscale, nome, cognome, ruolo FROM Utenti ")
@@ -44,12 +46,19 @@ def insert_esami(data, docenteR):
 
 
 def insert_prova(data, user): 
-	codProva = data['codProva']
-	esame = data['codEsame']
-	#docenteReferente = data['docenteReferente']
-	tipoProva = data['tipoProva']
-	dataProva = data['dataProva']
-	return db.engine.execute("INSERT INTO Prove(codProva, esame, docenteReferente, tipoProva,dataProva ) VALUES (%s,%s, %s, %s, %s)", codProva, esame, user, tipoProva, dataProva)
+	codProva = data.get('codprova')
+	esame = data.get('esame')
+	nomeprova = data.get('nomeprova')
+	tipoProva = data.get('tipoprova')
+	durata = data.get('durata')
+	descrizione= data.get('tipoprova')
+	print(descrizione)
+	dataProva = data.get('dataprova')
+	completo = bool(data.get('completo'))
+	datascandenza = data.get('datascadenza')
+	richiesta = data.get('richiestosuperamentododprova')
+	durata = data.get('durata')
+	return db.engine.execute("INSERT INTO Prove(codProva, nomeProva, esame, docenteReferente, descrizione,  tipoProva,dataProva, dataScandenza, richestoSuperamentoCodProva, completo ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", codProva, nomeprova, esame, user, descrizione,durata,  tipoProva, dataProva, datascandenza, richiesta, completo)
 
 def insert_prenotazioni_prove(data, user):
 	print(data)
@@ -77,7 +86,8 @@ def get_jesami_prof(prof):
 	return jresult
 
 def get_jprove_prof(prof):
-	result = db.engine.execute("SELECT * FROM Esami es LEFT JOIN Prove p ON es.codEsame=p.esame WHERE es.docente = %s", prof).fetchall()
+	print(prof)
+	result = db.engine.execute("SELECT p.codProva, p.nomeProva, p.dataProva FROM Esami es RIGHT JOIN Prove p ON es.codEsame=p.esame WHERE es.docente = %s OR es.docenteReferente=%s", prof, prof).fetchall()
 	jresult = json.dumps([dict(ix) for ix in result],  default=str)
 	return jresult
 

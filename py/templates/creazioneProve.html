@@ -1,9 +1,6 @@
 <!---->
 {% extends "base.html"%}
     {%block menu%}
-<<<<<<< Updated upstream
-        <a href="/login/private/professore">Home prof</a>
-=======
     <a href="">Home prof</a>
     <a href="creazioneProve">crea prove</a>
     <a href="regVotoProve">Reg Prove</a>
@@ -11,58 +8,20 @@
     <a href="regEsame">reg esame</a>
     <a href="risAppello">Risultati appello</a>
     
->>>>>>> Stashed changes
     {%endblock%}
     {%block title%}
     <h5>Aggiungi una nuova prova:</h5>
     {%endblock%}
     {%block content%}
-<<<<<<< Updated upstream
-    <!--INSERT INTO Prove (codProva, nomeProva, esame, docenteReferente, descrizione, durata, tipoProva, dataProva, dataScandenza, richestoSuperamentoCodProva, completo)
-VALUES-->
-<form method="POST" class="form-container" name="provaform" style="max-width: 600px;">
-    <label for="codprova" style="white-space: nowrap; width: 150px;"><b>Codice Prova</b></label>
-    <input type="text" placeholder="Inserire codice della prova" name="codprova" required>
-    <label for="nomeprova"><b>Nome Prova</b></label>
-    <input type="text" placeholder="Inserire nome della prova" name="nomeprova" required>
-    <label for="esame"><b>Esame</b></label>
-    <input type="text" placeholder="Inserire codice esame" name="esame" required>
-    <label for="descrizione" style="white-space: nowrap; width: 150px;"><b>Descrizione Prova:</b></label>
-    <textarea placeholder="Inserire descrizione della prova" name="descrizione" rows="4" cols="50" required></textarea><br>
-    <label for="durata" style="white-space: nowrap; width: 150px;"><b>Durata Prova</b></label>
-    <input type="text" placeholder="Inserire durata della prova" name="durata" required>
-    <label for="tipoProva" style="white-space: nowrap; width: 150px;"><b>Tipologia Prova</b></label>
-    <input type="text" placeholder="Inserire tipologia della prova" name="tipoProva" required>
-    <label for="completo"><b>Completo</b></label>
-    <input type="checkbox" name="completo" required>
-    <label for="dataprova" style="white-space: nowrap; width: 150px;"><b>Data Prova</b></label>
-    <input type="datetime-local" name="dataprova" required>
-    <label for="datascadenza" style="white-space: nowrap; width: 150px;"><b>Data Scadenza</b></label>
-    <input type="datetime-local" name="datascadenza" required>
-    <label for="richiestoSuperamentoCodProva" style="white-space: nowrap; width: 150px;"><b>Richiesto Superamento</b></label>
-    <input type="text" placeholder="Inserire codice prova richiesta per attuare l'esame" name="richiestoSuperamentoCodProva">
-    <br>
-    <button type="submit" class="btn">Aggiungi</button>
-    <button type="button" class="btn cancel" onclick="closeForm('provaform')">Annulla</button>
-</form>
-
-
-
-    
-=======
         <center>
-        {% if esami %}
+        {% if prove %}
         <table class="table table-striped">
             <tr>
-              <th> Codice Esame </th>
-              <th> Esame </th>
-              <th> Docente </th>
-              <th> Tipologia </th>
-              <th> Data </th>
-              <th>  Scadenza </th>
-              
+              <th> Codice Prova </th>
+              <th> Nome prova </th>
+              <th> Data prova </th>  
             </tr> 
-            <tbody  class id="EsameID"> 
+            <tbody  class id="ProveID"> 
             </tbody>
         </table><br>
 
@@ -72,15 +31,26 @@ VALUES-->
 
         <form method="POST" class="form-container" name="provaform" style="max-width: 600px;">
             <label for="codprova" style="white-space: nowrap; width: 150px;"><b>Codice Prova</b></label>
-            <input type="text" placeholder="Inserire codice prova" name="codprova" required>
+            <input type="text" placeholder="Inserire codice della prova" name="codprova" required>
             <label for="nomeprova"><b>Nome Prova</b></label>
-            <input type="text" placeholder="Inserire nome prova" name="nomeprova" required>
-            <label for="tipoprova" style="white-space: nowrap; width: 150px;"><b>Tipologia Prova</b></label>
-            <input type="text" placeholder="Inserire tipologia prova" name="tipoprova" required>
-            <label for="dataprova"><b>Data Prova</b></label>
-            <input type="date" name="dataprova" required>
+            <input type="text" placeholder="Inserire nome della prova" name="nomeprova" required>
+            <label for="esame"><b>Esame</b></label>
+            <input type="text" placeholder="Inserire codice esame" name="esame" required>
+            <label for="descrizione" style="white-space: nowrap; width: 150px;"><b>Descrizione Prova:</b></label>
+            <textarea placeholder="Inserire descrizione della prova" name="descrizione" rows="4" cols="50" required></textarea><br>
+            <label for="durata" style="white-space: nowrap; width: 150px;"><b>Durata Prova</b></label>
+            <input type="text" placeholder="Inserire durata della prova" name="durata" required>
+            <label for="tipoProva" style="white-space: nowrap; width: 150px;"><b>Tipologia Prova</b></label>
+            <input type="text" placeholder="Inserire tipologia della prova" name="tipoProva" required>
+            <label for="completo"><b>Completo</b></label>
+            <input type="checkbox" name="completo" required>
+            <label for="dataprova" style="white-space: nowrap; width: 150px;"><b>Data Prova</b></label>
+            <input type="datetime-local" name="dataprova" required>
             <label for="datascadenza" style="white-space: nowrap; width: 150px;"><b>Data Scadenza</b></label>
-            <input type="date" name="datascadenza" required>
+            <input type="datetime-local" name="datascadenza" required>
+            <label for="richiestoSuperamentoCodProva" style="white-space: nowrap; width: 150px;"><b>Richiesto Superamento</b></label>
+            <input type="text" placeholder="Inserire codice prova richiesta passata per potersi iscrivere alla prova" name="richiestosuperamentododprova">
+            <br>
             <button type="submit" class="btn">Aggiungi</button>
             <button type="button" class="btn cancel" onclick="closeForm('provaform')">Annulla</button>
         </form>
@@ -88,24 +58,23 @@ VALUES-->
 
 
             <script type="text/javascript">
-                var notjson = decodeHtml('{{esami}}');
-                var jesami = JSON.parse(notjson);
+                var notjson = decodeHtml('{{prove}}');
+                var json = JSON.parse(notjson);
                 //
                 //console.log( " jcorsiii!!" + jcorsi);
                 //fine variabili
                 //chiamate
             
-                tab_corsi(jesami);
+                tab_corsi(json);
             
                 //funzioni  
                 function tab_corsi(data){
                     console.log( data);
-                    var table = document.getElementById('EsameID');
+                    var table = document.getElementById('ProveID');
                     for (var i = 0; i < data.length; i++){
                     var row = `<tr>
-                                <td>${data[i].codesame}</td>
-                                <td>${data[i].materia}</td>
-                                <td>${data[i].docentereferente}</td>
+                                <td>${data[i].codprova}</td>
+                                <td>${data[i].nomeprova}</td>
                                 <td>${data[i].dataprova}</td>
                               </tr>`
                     
@@ -123,5 +92,4 @@ VALUES-->
             
             
             </script>
->>>>>>> Stashed changes
     {%endblock%}

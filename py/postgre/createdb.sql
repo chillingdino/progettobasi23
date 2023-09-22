@@ -33,15 +33,15 @@ CREATE TABLE Esami(
 
 CREATE TABLE Prove(
     codProva varchar(50) not null,
-	nomeProva varchar(50) not null, 
+	nomeProva varchar(50) not null,  --rimuovare nome "prova" da qui
   	esame varchar(50) not null,
-    docenteReferente varchar(50),
+    docenteReferente varchar(50), -- add not null
 
     descrizione varchar(50),
-    durata varchar(50),
+    durata varchar(50), --int non varchar, add not null
     
-    tipoProva varchar(50),
-    dataProva timestamp not null,
+    tipoProva varchar(50), --tipo metterlo con enum
+    dataProva timestamp not null, 
     dataScandenza timestamp not null,
 	richestoSuperamentoCodProva varchar(50),
 	completo boolean not null,

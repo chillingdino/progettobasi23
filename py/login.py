@@ -84,15 +84,16 @@ def professore():
 def prof_prove():
 	if current_user.ruolo == 'professore':
 		if request.method == 'GET':
-			ris = get_jesami_prof(current_user.id)
-			return render_template('creazioneProve.html', corsi=ris)
+			ris = get_jprove_prof(current_user.id)
+			return render_template('creazioneProve.html', prove=ris)
 		else:
 			#POST
 			data = request.form
 			try:
-				insert_prova(data, current_user)
+				insert_prova(data, current_user.id)
 				flash("Inserimento riuscito", category="alert alert-success")
-			except:
+			except Exception as e: 
+				print(e)
 				flash("Errore inserimento", category="alert alert-warning")
 			return redirect(url_for('login.prof_prove'))
 	else:
