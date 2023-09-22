@@ -6,6 +6,7 @@ from .auth import *
 from .functions import *
 import json
 
+
 #gestione pagina di login(richiamata da href in index)
 login = Blueprint('login', __name__)
 
@@ -172,8 +173,7 @@ def prof_registrazioneVotoEsame():
 @login_required
 def utente_iscrizoni():
 	if current_user.ruolo =='utente':
-		jprenotazioni = get_prove_iscrizionePossibile(current_user.id)
-		print(jprenotazioni)
+		jprenotazioni = get_jiscrizione_prova()
 		if request.method == 'GET':
 			return render_template('iscrProve.html', value='current_user.nome', pronatazioni=jprenotazioni)
 		else:
@@ -193,44 +193,12 @@ def utente_iscrizoni():
 @login.route('/private/user', methods=['GET', 'POST'])
 @login_required
 def utente():
-    if current_user.ruolo == 'utente':
-        jprove = get_jiscrizione_prova(current_user.id)
-        jesami = get_jesami_superati(current_user.id)
-        if request.method == 'GET':
-            return render_template('user.html', value='current_user.nome', prove=jprove, esami=jesami)
-    else:
-        return redirect(url_for('login.log'))
-
-
-
-
-
-#dato appello ritorna tutti coloro che lo hanno passato
-@login.route('/private/risAppello') #corretto
-@login_required
-def risultato_appello():
-	if current_user.ruolo=='professore':
-		try: 
-			my_var = request.args.get('my_var', None)
-			x = get_result_prova(my_var)
-			return render_template('risAppello.html', ris = x )
-		except:
-			return render_template('risAppello.html' )
+	if current_user.ruolo =='utente':
+		jprove = get_jiscrizione_prova(current_user.id)
+		jesami = get_jesami_superati(current_user.id)
+		if request.method == 'GET':
+			return render_template('homepage_studente.html', value='current_user.nome', prove=jprove, esami=jesami )
 	else:
 		return redirect(url_for('login.log'))
 
 
-
-#informazioni prove e esami, nome prof, date, magari anche durata(?)
-@login.route('/private/infoEsame')
-@login_required
-def info_esami():
-	if current_user.ruolo =='utente' or current_user.ruolo=='professore':
-		try: 
-			my_var = request.args.get('my_var', None)
-			x = get_result_prova(my_var)
-			return render_template('infoEsame.html', ris = x )
-		except:
-			return render_template('infoEsame.html' )
-	else:
-		return redirect(url_for('login.log'))

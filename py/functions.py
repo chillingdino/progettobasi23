@@ -82,6 +82,27 @@ def get_jiscrizione_prova(cfutente):
 	return jiscrizioni
 
 
+def get_esami_disponibili(cfutente):
+    # Esegui la query per recuperare gli esami disponibili per lo studente con il codice fiscale specificato
+    query = """
+        SELECT e.*
+        FROM Esami e
+        LEFT JOIN Prove p ON e.codEsame = p.esame AND p.completo = true
+        WHERE e.codEsame NOT IN (
+            SELECT esame
+            FROM Esami_superati
+            WHERE studente = %s
+        ) AND (p.completo IS NULL OR p.completo = true)
+    """
+    result = db.engine.execute(query, cfutente).fetchall()
+
+    # Formatta il risultato della query in una lista di dizionari
+    esami_disponibili = [dict(row) for row in result]
+
+    return esami_disponibili
+
+
+
 def get_jesami_prof(prof):
 	result = db.engine.execute("SELECT * FROM Esami es WHERE es.docenteReferente = %s OR es.docente= %s", prof, prof).fetchall()
 	jresult = json.dumps([dict(ix) for ix in result],  default=str)

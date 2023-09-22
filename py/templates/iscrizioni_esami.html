@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Iscrizione Esami
+{% endblock %}
+
+{% block content %}
+  <h1>Elenco Esami Disponibili</h1>
+  <ul>
+    {% for esame in esami_disponibili %}
+      <li>{{ esame.materia }} - Docente: {{ esame.docenteReferente }} - Data: {{ esame.dataProva }}</li>
+      <form method="POST" action="{{ url_for('login.utenteIscrizoni') }}">
+        <input type="hidden" name="codProva" value="{{ esame.codProva }}">
+        <button type="submit">Iscriviti</button>
+      </form>
+    {% endfor %}
+  </ul>
+{% endblock %}
