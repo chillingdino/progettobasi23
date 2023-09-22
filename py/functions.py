@@ -46,20 +46,20 @@ def insert_esami(data, docenteR):
 
 
 def insert_prova(data, user): 
-	codProva = data.get('codprova')
-	esame = data.get('esame')
-	nomeprova = data.get('nomeprova')
-	tipoProva = data.get('tipoprova')
-	durata = data.get('durata')
-	descrizione= data.get('tipoprova')
-	print(descrizione)
-	dataProva = data.get('dataprova')
-	completo = bool(data.get('completo'))
-	datascandenza = data.get('datascadenza')
-	richiesta = data.get('richiestosuperamentododprova')
-	durata = data.get('durata')
-	return db.engine.execute("INSERT INTO Prove(codProva, nomeProva, esame, docenteReferente, descrizione,  tipoProva,dataProva, dataScandenza, richestoSuperamentoCodProva, completo ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", codProva, nomeprova, esame, user, descrizione,durata,  tipoProva, dataProva, datascandenza, richiesta, completo)
-
+	codprova = data.get('codprova') #1
+	nomeprova = data.get('nomeprova') #2
+	esame = data.get('esame') #3
+	#user #4
+	descrizione= data.get('tipoprova') #5
+	durata = data.get('durata') #6
+	tipoprova = data.get('tipoprova')  #7
+	print(descrizione) 
+	dataprova = data.get('dataprova') #8
+	datascandenza = data.get('datascadenza')#9
+	richiesta = data.get('richiestosuperamentododprova') #10
+	completo = bool(data.get('completo')) #11
+	return db.engine.execute("INSERT INTO Prove(codprova, nomeprova, esame, user, descrizione, durata, tipoProva, dataprova, datascadenza, richiesta, completo) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", codprova, nomeprova, esame, user, descrizione, durata, tipoProva, dataprova, datascadenza, richiesta, completo)
+													#1		#2			#3	#4			#5		#6			#7			#8			#9			#10		#11				#1  #2  #3  #4  #5  #6  #7  #8  #9  #10 #11		#1			#2		#3		#4		#5		  #6		#7			#8			#9			#10		#11	
 def insert_prenotazioni_prove(data, user):
 	print(data)
 

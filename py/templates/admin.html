@@ -1,14 +1,11 @@
 {% extends "base.html"%}
     {%block menu%}
-    <a href="/login/logout" class="logout"> LOGOUT </a>
+    <a href="/login/logout" class="logout"> LOGOUT</a>
     {%endblock%}
     {%block title%}
-        <h1> {{value}}</h1>
-
     {%endblock%}
     {%block content%}
         <body>
-            
             <div class="content">
                 <center>
                     <table class="table table-striped">
@@ -21,19 +18,18 @@
                     <tbody id="myTable"> 
                     </tbody>
                 </table> 
-                </center>       
+                </center>     
                  <form method="POST" action="">
                 <div class = "form">
                     <h2>Cambia ruolo</h2>
-                    codicefiscale <input type = "text" name = "codfiscale" /> </br>
-                    <label for="utente">utente <input type="radio" id="utente" name="changerole" value="utente"></label><br>
-                    <label for="professore">professore <input type="radio" id="professore" name="changerole" value="professore"></label><br>
-                    <label for="admin">admin <input type="radio" id="admin" name="changerole" value="admin"></label><br>
+                    Codice Fiscale <input type = "text" name = "codfiscale" /> </br>
+                    <label for="utente">Utente <input type="radio" id="utente" name="changerole" value="utente"></label><br>
+                    <label for="professore">Professore<input type="radio" id="professore" name="changerole" value="professore"></label><br>
+                    <label for="admin">Admin<input type="radio" id="admin" name="changerole" value="admin"></label><br>
                     <input type = "submit">
                 </div>
-    			
             </div>
-           
+            
         </body>
 <script type="text/javascript">
 //per vedere tutti gli users da fare tabella
